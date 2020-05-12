@@ -2,11 +2,11 @@
 	"name": "palace-cinema",
 	"version": "0.0.1",
 	"description": "",
-	"main": "server.js",
+	"main": "index.js",
+	"module": "server.js",
 	"scripts": {
-		"start": "node server.js",
-		"server": "nodemon server.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node index.js",
+		"dev": "nodemon index.js"
 	},
 	"keywords": [],
 	"license": "MIT",
