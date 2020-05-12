@@ -37,6 +37,9 @@ app.use(session({
 }));
 
 const apiRouter = express.Router();
+app.get('/', (req, res) => {
+	res.send('Hello from MERN');
+});
 app.use('/api', apiRouter);
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/session', sessionRoutes);
