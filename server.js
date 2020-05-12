@@ -44,17 +44,17 @@ apiRouter.use('/movies', movieRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
+  app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  });
 }
 
-// for local env, use /client/public folder
 else {
   app.use(express.static(path.join(__dirname, '/client/public')));
+  app.get("/*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./client/public/index.html"));
+  });
 }
-
-// server the client index.html file for all requests
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/public/index.html"));
-});
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 } catch (err) {
