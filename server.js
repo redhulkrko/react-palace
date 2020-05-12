@@ -41,6 +41,7 @@ app.use('/api', apiRouter);
 apiRouter.use('/users', userRoutes);
 apiRouter.use('/session', sessionRoutes);
 apiRouter.use('/movies', movieRoutes);
+const path = require('path');
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
