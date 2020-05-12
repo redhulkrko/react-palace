@@ -1,5 +1,5 @@
 // ESM syntax is supported.
-import express from 'express';
+var express = require('express');
 import mongoose from 'mongoose';
 import session from "express-session";
 import connectStore from "connect-mongo";
