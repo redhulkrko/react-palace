@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
-// import { connect } from "react-redux";
+
 import { Redirect, Route, withRouter } from "react-router-dom";
 import { MyTestStore } from '../components/App'
 
-const mapStateToProps = ({ session: { userId} }) => ({
-  loggedIn: Boolean(userId)
-});
 
 const Auth = ({ path, component: Component }) => {
   
@@ -42,7 +39,7 @@ export const ProtectedRoute = ({ path, component: Component, layout: Layout, ...
 )}
 
 export const AuthRoute = withRouter(
-  connect(mapStateToProps)(Auth)
+  Auth
 );
 
 // export const ProtectedRoute = withRouter(
