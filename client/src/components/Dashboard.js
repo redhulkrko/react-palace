@@ -11,17 +11,6 @@ import Today from "./Today";
 import BoxOffice from "./BoxOffice";
 import Reviews from "./Reviews";
 
-// import { connect } from "react-redux";
-// import { logout } from "../actions/session";
-
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
-
 const GlobalStyle = createGlobalStyle`
 
   body {
@@ -64,7 +53,8 @@ const Board = styled.div`
 
 
 
-const Dashboard = ({ logout, session }) => (
+const Dashboard = (props) => {
+  return (
 <>
 <APIContextProvider>
  <GlobalStyle/>
@@ -79,6 +69,6 @@ const Dashboard = ({ logout, session }) => (
  </Board>
  </APIContextProvider>
 </>
-);
-export default (Dashboard);
+)};
+export default Dashboard;
   

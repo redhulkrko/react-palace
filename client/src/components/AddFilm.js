@@ -1,19 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// import { connect } from "react-redux";
-// import { logout } from "../actions/session";
-
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
-
-
-
 const MainContainer = styled.main`
 grid-area: main;
 background-color: #EAEDF1;
@@ -31,7 +18,8 @@ column-count: 2;
 }
 `;
 
-const AddFilm = ({ logout, session }) => (
+const AddFilm = (props) => {
+  return (
 <>
  <MainContainer>
     <MainBlock>
@@ -39,6 +27,7 @@ const AddFilm = ({ logout, session }) => (
     </MainBlock>
 </MainContainer>
 </>
-);
-export default (AddFilm);
+
+)};
+export default AddFilm;
   

@@ -4,19 +4,6 @@ import { APIContextProvider } from "./xapiContext";
 
 import Movies from "./xMovies";
 
-// import { connect } from "react-redux";
-// import { logout } from "../actions/session";
-
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
-
-
-
 const MainContainer = styled.main`
 grid-area: main;
 display:grid;
@@ -34,7 +21,8 @@ const Updates = styled.div`
   background: purple;
 `;
 
-const Dashboard = ({ logout, session }) => (
+const Dashboard = (props) => {
+  return (
 <>
 <APIContextProvider>
 
@@ -46,6 +34,6 @@ const Dashboard = ({ logout, session }) => (
 <Updates/>
 </APIContextProvider>
 </>
-);
-export default (Dashboard);
+)};
+export default Dashboard;
   

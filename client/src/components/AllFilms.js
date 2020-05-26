@@ -1,17 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// import { connect } from "react-redux";
-// import { logout } from "../actions/session";
-
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
-
 const MainContainer = styled.div`
 background-color: #EAEDF1;
 color: #394263;
@@ -39,7 +28,8 @@ column-count: 2;
 // `;
 
 
-const Films = ({ logout, session }) => (
+const Films = (props) => {
+  return (
 <>
  <MainContainer>
     <MainBlock>
@@ -47,6 +37,6 @@ const Films = ({ logout, session }) => (
     </MainBlock>
 </MainContainer>
 </>
-);
-export default (Films);
+)};
+export default Films;
   

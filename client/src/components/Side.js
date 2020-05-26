@@ -3,15 +3,15 @@ import { NavLink } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 // import { connect } from "react-redux";
-// import { logout } from "../actions/session";
+import { logout } from "../actions/session";
 
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
+const mapStateToProps = ({ session }) => ({
+  session
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout())
+});
 
 const GlobalStyle = createGlobalStyle`
 

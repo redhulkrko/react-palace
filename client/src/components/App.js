@@ -3,7 +3,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import "./xApp.css";
-import "../script";
+// import "../script";
 
 import { AuthRoute, ProtectedRoute } from "../util/route";
 import AddFilm from "./AddFilm";
@@ -24,14 +24,8 @@ const history = createBrowserHistory();
 
 
 
-// import { connect } from "react-redux";
-
 
 export const MyTestStore = React.createContext({})
-
-// const mapStateToProps = ({ session: { userId} }) => ({
-//     loggedIn: Boolean(userId)
-//   });
 
   
 export default ((props) => {

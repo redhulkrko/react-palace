@@ -13,17 +13,6 @@ import {
 } from "@material-ui/icons";
 import styled, { createGlobalStyle } from "styled-components";
 
-// import { connect } from "react-redux";
-// import { logout } from "../actions/session";
-
-// const mapStateToProps = ({ session }) => ({
-//   session
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   logout: () => dispatch(logout())
-// });
-
 const GlobalStyle = createGlobalStyle`
     .activeRoute, .activeRoute svg {
       color: purple;
