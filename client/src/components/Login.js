@@ -165,28 +165,35 @@ const Auth = ({ path, component: Component }) => {
   const { user, setState } = useContext(MyTestStore)
   const loggedIn = !!user
   console.log(loggedIn)
+  console.log({user})
   return (
   <Route
     path={path}
     render={props => (
       loggedIn ?
-      <Redirect to='/dashboard' /> :
+      <Redirect to='/admin' /> :
       <Component {...props} />
     )}
   />
 )}
 
-export const ProtectedRoute = ({ path, component: Component }) => {
-  const { user, setState } = useContext(MyTestStore)
+export const ProtectedRoute = ({ path, component: Component, layout: Layout, ...rest }) => {
+  const { user, verified, setState } = useContext(MyTestStore)
   const loggedIn = !!user
+  console.log(verified)
+  const verifiedAndLoggedIn = verified && loggedIn
+  const verifiedButNotLoggedIn = verified && !loggedIn
   console.log({loggedIn})
+  console.log({user})
   return (
   <Route
     path={path}
     render={props => (
-      loggedIn ? 
-      <Component {...props} /> :
-      <Redirect to='/login' />
+      verifiedAndLoggedIn &&
+      <Layout>
+      <Component {...props} />
+      </Layout> || (verifiedButNotLoggedIn &&
+      <Redirect to='/login' />) || console.log('spinner')
     )}
   />
 )}
@@ -211,9 +218,11 @@ const Login = ({ errors, login }) => {
     console.log({response}, {data})
 
     if (response.ok) {
-      setState({user: data, loginError: undefined})
+      console.log({user: data, loginError: undefined, verified: true})
+      setState({user: data, loginError: undefined, verified: true})
     } else {
-      setState({loginError:response.statusText})
+      console.log({loginError:response.statusText, verified: true})
+      setState({loginError:response.statusText, verified: true})
     } 
   }
   
@@ -221,7 +230,8 @@ const Login = ({ errors, login }) => {
     const response = fetch('/api/session')
     .then((res) => res.json())
     .then(({user}) => {
-      user && user.userId && setState({user});
+      console.log({verified: true, user: user && user.userId && user || undefined})
+      setState({verified: true, user: user && user.userId && user || undefined});
       (!user || !user.userId) && setLoginChecked(true)
     })
   }, [])

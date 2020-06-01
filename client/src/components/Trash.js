@@ -11,16 +11,16 @@ grid-area: main;
   padding: 20px;
 `;
 
-const Films = (props) => {
+const Trash = (props) => {
   return (
 <>
 <APIContextProvider>
 
  <MainContainer>
-       <h1>Films</h1>
+       <h1>Trash</h1>
 </MainContainer>
 </APIContextProvider>
 </>
 )};
-export default (Films);
+export default (Trash);
   

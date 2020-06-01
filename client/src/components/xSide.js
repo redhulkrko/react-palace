@@ -98,23 +98,23 @@ const SideNav = () => {
               }}
             />
           </SidebarClose>
-          <NavLink exact to="/dashboard" activeClassName="activeRoute">
+          <NavLink exact to="/admin" activeClassName="activeRoute">
             <Dashboard />
             <NavTitle>Dashboard</NavTitle>
           </NavLink>
-                    <NavLink exact to="/dashboard/films" activeClassName="activeRoute">
+                    <NavLink exact to="/admin/movies" activeClassName="activeRoute">
             <Theaters />
-            <NavTitle>Films</NavTitle>
+            <NavTitle>Movies</NavTitle>
           </NavLink>
-                    <NavLink exact to="/dashboard/reviews" activeClassName="activeRoute">
+                    <NavLink exact to="/admin/reviews" activeClassName="activeRoute">
             <LocalPlay />
             <NavTitle>Reviews</NavTitle>
           </NavLink>
-                    <NavLink exact to="/dashboard/box-office" activeClassName="activeRoute">
+                    <NavLink exact to="/admin/box-office" activeClassName="activeRoute">
             <ViewList />
             <NavTitle>Box Office</NavTitle>
           </NavLink>
-                    <NavLink exact to="/dashboard/trash" activeClassName="activeRoute">
+                    <NavLink exact to="/admin/trash" activeClassName="activeRoute">
             <Delete />
             <NavTitle>Trash</NavTitle>
           </NavLink>
@@ -122,7 +122,7 @@ const SideNav = () => {
             <Home />
             <NavTitle>Homepage</NavTitle>
           </NavLink>
-                    <NavLink exact to="/dashboard/logout" activeClassName="activeRoute">
+                    <NavLink exact to="/admin/logout" activeClassName="activeRoute">
             <Reply />
             <NavTitle>Log Out</NavTitle>
           </NavLink>

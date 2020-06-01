@@ -9,13 +9,13 @@ import SideNav from "./xSide";
 
 
 const Admin = (props) => {
-    const {user, setState} = useContext(MyTestStore)
+    const {user, verified, setState} = useContext(MyTestStore)
 
     return (
 
     <>
-    <Header/>
-    <SideNav/>
+    {/* <Header/> */}
+    {/* <SideNav/> */}
     <Footer/>
 </>
 )};

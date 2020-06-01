@@ -9,12 +9,13 @@ const Auth = ({ path, component: Component }) => {
   const { user, setState } = useContext(MyTestStore)
   const loggedIn = !!user
   console.log(loggedIn)
+  console.log({user})
   return (
   <Route
     path={path}
     render={props => (
       loggedIn ?
-      <Redirect to='/dashboard' /> :
+      <Redirect to='/admin' /> :
       <Component {...props} />
     )}
   />

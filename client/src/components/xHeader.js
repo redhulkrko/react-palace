@@ -46,6 +46,19 @@ const logOutHandler = () => {
   fetch("api/session", { method: "DELETE" })
 }
 
+
+let links1 = [
+  { label: 'Home', link: '#home' },
+  { label: 'About', link: '#about' },
+  { label: 'Portfolio', link: '#portfolio' },
+  { label: 'Contact Us', link: '#contact-us' },
+];
+
+let links2 = [
+  { label: 'About', link: '#about' },
+  { label: 'Portfolio', link: '#portfolio' },
+  { label: 'Contact Us', link: '#contact-us' },
+];
 return (
 <>
 <MenuIcon className='openIcon'>
@@ -62,8 +75,8 @@ return (
   <Fragment>
     <Wrapper>
       <div></div>
-      <Dropdown Label="+ NEW POST"  />
-      <Dropdown Type={Avatar} />
+      <Dropdown Label="+ NEW POST" links={links1}  />
+      <Dropdown Type={Avatar} links={links2} />
     </Wrapper>
   </Fragment>
 </HeaderDiv>

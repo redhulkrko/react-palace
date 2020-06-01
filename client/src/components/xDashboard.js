@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { APIContextProvider } from "./xapiContext";
 
-import Movies from "./xMovies";
+import MovieCarousel from "./xMovieCarousel";
 
 const MainContainer = styled.main`
 grid-area: main;
@@ -27,7 +27,7 @@ const Dashboard = (props) => {
 <APIContextProvider>
 
  <MainContainer>
-        <Movies/>
+        <MovieCarousel/>
         <div class="overview"></div>
                 <div class="office"></div>
 </MainContainer>

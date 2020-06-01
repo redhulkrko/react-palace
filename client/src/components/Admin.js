@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { NavLink } from 'react-router-dom';
 import styled from "styled-components";
 
-import Header from "./Header";
+import Header from "./xHeader";
 import Footer from "./Footer";
 
 import { MyTestStore } from './App'

@@ -91,6 +91,9 @@ export class Dropdown extends Component {
     const { Type } = this.props;
     const { Label } = this.props;
     const { menuActive } = this.state;
+    const menuLinks = this.props.links.map(item => (
+      <li key={item.label}>{item.label}</li>
+    ));
     return (
       <>
         <Type
@@ -106,18 +109,7 @@ export class Dropdown extends Component {
           className={`${menuActive ? "dropdown-active" : ""}`}
         >
         <ul class="dropdown-list">
-          <li class="dropdown-list-item">
-            <span class="dropdown-icon"><i class="far fa-user"></i></span>
-            <span class="dropdown-title">my profile</span>
-          </li>
-          <li class="dropdown-list-item">
-            <span class="dropdown-icon"><i class="fas fa-clipboard-list"></i></span>
-            <span class="dropdown-title">my account</span>
-          </li>
-          <li class="dropdown-list-item">
-            <span class="dropdown-icon"><i class="fas fa-sign-out-alt"></i></span>
-            <span class="dropdown-title">log out</span>
-          </li>
+          {menuLinks}
         </ul>
         </Dropmenu>
         </Type>
