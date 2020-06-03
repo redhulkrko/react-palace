@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { MyTestStore } from './App';
-
+import "react-dropzone-uploader/dist/styles.css";
+import Dropzone from "react-dropzone-uploader";
 import styled from "styled-components";
 
 import axios from 'axios';
@@ -8,8 +9,8 @@ import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
 // import './style.css';
 
-import { FilePond } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
+// import { FilePond } from 'react-filepond';
+// import 'filepond/dist/filepond.min.css';
 // import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 // import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 // import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
@@ -22,16 +23,56 @@ grid-area: main;
 display:grid;
   grid-template-columns: 1fr;
   margin: 0;
+`;
+
+const MovieForm = styled.form`
+display: grid;
+grid-template-columns: 1fr 25%;
+height: 100vh;
+width: 100%;
+margin:0;
+`;
+
+const MovieInfo = styled.div`
   padding: 80px;
 `;
 
-const Updates = styled.div`
-  grid-area: updates;
-  box-shadow: 0 1px 0 0 #eaedf3;
-  background: purple;
+const MoviePosters = styled.div`
+  background: lightgrey;
+  padding: 80px 40px;
 `;
 
+const HideMe = styled.div`
+  height: 480px;
+  overflow-y: auto;
+  overflow-x: hidden;
+`;
 
+const MyUploader = () => {
+  // specify upload params and url for your files
+  const getUploadParams = ({ meta }) => {
+    return { url: "https://httpbin.org/post" };
+  };
+
+  // called every time a file's `status` changes
+  const handleChangeStatus = ({ meta, file }, status) => {
+    console.log(status, meta, file);
+  };
+
+  // receives array of files that are done uploading when submit button is clicked
+  const handleSubmit = files => {
+    console.log(files.map(f => f.meta));
+  };
+
+  return (
+    <Dropzone
+      getUploadParams={getUploadParams}
+      onChangeStatus={handleChangeStatus}
+      onSubmit={handleSubmit}
+      accept="image/*,audio/*,video/*"
+    />
+  );
+};
 
 const Create = (props) => {
   const {user, verified, setState} = useContext(MyTestStore)
@@ -77,9 +118,12 @@ const onFileChange = (files) => {
   return (
     <>
        <MainContainer>
-      {showLoading && <span className="sr-only">Loading...</span>}    
+
+            <MovieForm onSubmit={saveMovie}>
+              
+            <MovieInfo>
+            {showLoading && <span className="sr-only">Loading...</span>}    
             <h2 className="title">Add Movie</h2>
-            <form onSubmit={saveMovie}>
             <div className="wrapper">
               <span>Title</span>
                   <input className="no-outline" type="text" name="title" value={movie.title} onChange={onChange} placeholder="Film Title"  />
@@ -105,29 +149,20 @@ const onFileChange = (files) => {
             <span>Trailer</span>
                   <input className="no-outline" type="text" name="trailer" value={movie.trailer} onChange={onChange} placeholder="Trailer URL" />
             </div>
-
-
-
-            <div className="upload-wrapper">
             <div className="p-t-15">
                 <button className="btn btn--radius-2 btn--blue" type="submit">Submit</button>
             </div>
-            <div className="form-input full">
-                <FilePond
-                name='posters'
-                files={posterCollection}
-                allowMultiple={true}
-                server={null}
-                instantUpload={false}
-                onupdatefiles={(fileItems) => onFileChange(fileItems)}
-                />
-            </div>
-                    
 
-            </div>
-            </form>
+            </MovieInfo>
+           
+           <MoviePosters>
+            <HideMe>
+                <MyUploader/>
+            </HideMe>
+            </MoviePosters>       
+
+            </MovieForm>
         </MainContainer>
-        <Updates/>
     </>
   );
 }

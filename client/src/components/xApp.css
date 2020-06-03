@@ -386,3 +386,21 @@ span.cert {
 }
 
 
+.dzu-previewContainer {
+  padding: 30px 3% !important;
+  flex-direction: column !important;
+}
+
+.dzu-previewImage {
+  max-height: 140px !important;
+  max-width: 220px !important;
+  border-radius: 6px !important;
+}
+
+.dzu-previewStatusContainer {
+  margin: 15px 0 !important;
+}
+
+.dzu-dropzone {
+  overflow: visible !important;
+}

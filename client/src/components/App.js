@@ -15,6 +15,7 @@ import Signup from "./Signup";
 import Admin from "./xAdmin";
 import Dashboard from "./xDashboard";
 import AdminPage from "./xPage";
+import EditPage from "./EditPage";
 import Create from "./Create";
 import Edit from "./Edit";
 import Show from "./Show";
@@ -70,7 +71,7 @@ export default ((props) => {
 
           <ProtectedRoute exact path="/admin" component={Dashboard} layout={AdminPage} />
           <ProtectedRoute exact path="/admin/movies" component={Movies} layout={AdminPage} />
-          <ProtectedRoute exact path="/admin/movies/new" component={Create} layout={AdminPage} />
+          <ProtectedRoute exact path="/admin/movies/new" component={Create} layout={EditPage} />
           <ProtectedRoute exact path="/admin/movies/edit/:_id" component={Edit} layout={AdminPage} />
           <ProtectedRoute exact path='/admin/movies/show/:_id' component={Show} layout={AdminPage} />
 
