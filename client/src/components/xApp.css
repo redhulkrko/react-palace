@@ -385,10 +385,14 @@ span.cert {
   grid-template-columns: 70px 85px;
 }
 
+.title {
+  margin-bottom: 15px;
+}
 
 .dzu-previewContainer {
-  padding: 30px 3% !important;
+  padding: 10px 3% !important;
   flex-direction: column !important;
+  border-bottom: none !important;
 }
 
 .dzu-previewImage {
@@ -403,4 +407,16 @@ span.cert {
 
 .dzu-dropzone {
   overflow: visible !important;
+  padding: 35px 0 30px;
+  min-height: 100% !important;
+}
+
+.dzu-inputLabel {
+  padding: 0 69px;
+  font-size: 19px !important;
+  text-align: center;
+}
+
+.dzu-inputLabelWithFiles {
+  margin-left: 9% !important;
 }

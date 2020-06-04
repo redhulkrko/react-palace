@@ -43,9 +43,11 @@ const MoviePosters = styled.div`
 `;
 
 const HideMe = styled.div`
-  height: 480px;
+  height: 470px;
   overflow-y: auto;
   overflow-x: hidden;
+  background: gainsboro;
+  border: 1px solid lavender;
 `;
 
 const MyUploader = () => {
@@ -68,7 +70,6 @@ const MyUploader = () => {
     <Dropzone
       getUploadParams={getUploadParams}
       onChangeStatus={handleChangeStatus}
-      onSubmit={handleSubmit}
       accept="image/*,audio/*,video/*"
     />
   );
@@ -156,6 +157,7 @@ const onFileChange = (files) => {
             </MovieInfo>
            
            <MoviePosters>
+           <h2 className="title">Add Posters</h2>
             <HideMe>
                 <MyUploader/>
             </HideMe>
