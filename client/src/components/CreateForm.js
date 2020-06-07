@@ -85,7 +85,9 @@ const Input = () => {
 };
 
 const CustomLayout = () => {
-  const getUploadParams = () => ({ url: "https://palace-cinema.herokuapp.com/api/movies" });
+  const getUploadParams = (e) => { 
+    e.preventDefault();
+    return {url: "https://palace-cinema.herokuapp.com/api/movies" } };
 
   const [movie, setMovie] = useState(movieData);
   const [posterCollection, setPosterCollection] = useState(moviePosters);
