@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
 // @route GET api/movies
 // @trailer add/save movie
 // @access Public
-router.post('/', upload.array('posters'), (req, res) => {
+router.post('/', upload.array('file'), (req, res) => {
 
   var filenames = req.files.map(function(file) {
     return file.path; // or file.originalname
@@ -50,25 +50,27 @@ router.post('/', upload.array('posters'), (req, res) => {
   var b = (filenames.findIndex(function(item){
       return item.indexOf("slide")!==-1;
   }));
-
+  
   console.log(filenames);
-  console.log(movieData);
+  // console.log(movieData);
+  // console.log(req.body);
+
+  // console.log(req.files);
 
   var date = new Date(req.body.date);
-  var isoString = date.toISOString();
+  // var isoString = date.toISOString();
 
   var movieData = {
     id: req.body.id,
     title: req.body.title,
     synopsis: req.body.synopsis,
     trailer: req.body.trailer,
-    OpeningDate: isoString,
+    OpeningDate: date,
     poster:  filenames[a],
     slide: filenames[b]
   };
 
   let movie = new Movie(movieData);
-  console.log(movie);
   movie.save()
     .then(() => res.json({ movie, msg: 'New movie added successfully' }))
     .catch(err => res.status(400).json('Unable to add this movie'))

@@ -6,7 +6,7 @@ app.use(cors());
  
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "U:/XAMPP/htdocs/media/")
+    cb(null, "C:/Users/User/Desktop")
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname)

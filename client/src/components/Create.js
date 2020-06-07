@@ -9,14 +9,7 @@ import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
 // import './style.css';
 
-// import { FilePond } from 'react-filepond';
-// import 'filepond/dist/filepond.min.css';
-// import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
-// // Register the plugins
-// registerPlugin(FilePondPluginImageOverlay);
 
 const MainContainer = styled.main`
 grid-area: main;
@@ -50,30 +43,7 @@ const HideMe = styled.div`
   border: 1px solid lavender;
 `;
 
-const MyUploader = () => {
-  // specify upload params and url for your files
-  const getUploadParams = ({ meta }) => {
-    return { url: "https://httpbin.org/post" };
-  };
 
-  // called every time a file's `status` changes
-  const handleChangeStatus = ({ meta, file }, status) => {
-    console.log(status, meta, file);
-  };
-
-  // receives array of files that are done uploading when submit button is clicked
-  const handleSubmit = files => {
-    console.log(files.map(f => f.meta));
-  };
-
-  return (
-    <Dropzone
-      getUploadParams={getUploadParams}
-      onChangeStatus={handleChangeStatus}
-      accept="image/*,audio/*,video/*"
-    />
-  );
-};
 
 const Create = (props) => {
   const {user, verified, setState} = useContext(MyTestStore)
@@ -84,43 +54,99 @@ const Create = (props) => {
     const [showLoading, setShowLoading] = useState(false);
     const apiUrl = "http://localhost:5000/api/movies/";
 
-  const saveMovie = (e) => {
-    setShowLoading(true);
-    e.preventDefault();
-    const formData = new FormData();
-    formData.set("title", movie.title);
-    formData.set("synopsis", movie.synopsis);
-    formData.set("trailer", movie.trailer);
-    formData.set("id", movie.id);
-    formData.set("date", movie.date);
+  // const saveMovie = (e) => {
+  //   setShowLoading(true);
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.set("title", movie.title);
+  //   formData.set("synopsis", movie.synopsis);
+  //   formData.set("trailer", movie.trailer);
+  //   formData.set("id", movie.id);
+  //   formData.set("date", movie.date);
   
-    for (let img in posterCollection[0]) {
-      formData.append("posters", posterCollection[0][img])
-    }
-    const headers = "multipart/form-data"
-      axios.post(apiUrl, formData, headers)
-      .then((result) => {
-        setShowLoading(false);
-        console.log(result);
-        props.history.push('/show/' + result.data.movie._id)
-      }).catch((error) => setShowLoading(false));
-  };
+  //   for (let img in posterCollection[0]) {
+  //     formData.append("posters", posterCollection[0][img])
+  //   }
+  //   const headers = "multipart/form-data"
+  //     axios.post(apiUrl, formData, headers)
+  //     .then((result) => {
+  //       setShowLoading(false);
+  //       console.log(result);
+  //       props.history.push('/show/' + result.data.movie._id)
+  //     }).catch((error) => setShowLoading(false));
+  // };
 
   const onChange = (e) => {
     e.persist();
     setMovie({...movie, [e.target.name]: e.target.value})
+    console.log(movie.title)
 }
 
-const onFileChange = (files) => {
-    let items = files.map(fileItem => fileItem.file)
-    setPosterCollection([...posterCollection, ...items])
-}
+const Submit = props => {
+  const { e, files, onSubmit, movie } = props;
+
+  const handleSubmit = () => {
+    e.preventDefault();
+    console.log(files.map(f => f.meta));
+    console.log(movie);
+    onSubmit();
+    // allFiles.forEach(f => f.remove());
+  };
+  return (
+    <div className="dzu-submitButtonContainer">
+      <button onClick={handleSubmit} className="dzu-submitButton">
+        Submit
+      </button>
+    </div>
+  );
+};
+
+const Layout = ({
+  input,
+  previews,
+  submitButton,
+  dropzoneProps,
+  files,
+  extra: { maxFiles }
+}) => {
+  return (
+    <>
+    {submitButton}
+    <HideMe>
+      <div {...dropzoneProps}>{previews}{files.length < maxFiles && input}</div>
+    </HideMe>
+    </>
+  );
+};
+
+
+
+
+const MyUploader = () => {
+  const getUploadParams = () => ({ url: "https://httpbin.org/post" });
+
+  return (
+    <Dropzone
+      getUploadParams={getUploadParams}
+      SubmitButtonComponent={Submit}
+      LayoutComponent={Layout}
+      onSubmit={() => {
+        console.log("After submit?");
+      }}
+    />
+  );
+};
+
+// const onFileChange = (files) => {
+//     let items = files.map(fileItem => fileItem.file)
+//     setPosterCollection([...posterCollection, ...items])
+// }
 
   return (
     <>
        <MainContainer>
 
-            <MovieForm onSubmit={saveMovie}>
+            <MovieForm>
               
             <MovieInfo>
             {showLoading && <span className="sr-only">Loading...</span>}    
@@ -150,17 +176,11 @@ const onFileChange = (files) => {
             <span>Trailer</span>
                   <input className="no-outline" type="text" name="trailer" value={movie.trailer} onChange={onChange} placeholder="Trailer URL" />
             </div>
-            <div className="p-t-15">
-                <button className="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-            </div>
 
             </MovieInfo>
            
            <MoviePosters>
-           <h2 className="title">Add Posters</h2>
-            <HideMe>
                 <MyUploader/>
-            </HideMe>
             </MoviePosters>       
 
             </MovieForm>

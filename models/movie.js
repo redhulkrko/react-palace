@@ -21,10 +21,6 @@ const MovieSchema = new mongoose.Schema({
   },
   OpeningDate: {
     type: String,
-  },
-  updated_date: {
-    type: Date,
-    default: Date.now
   }
 });
 
