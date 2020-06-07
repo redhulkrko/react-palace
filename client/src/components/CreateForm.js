@@ -85,7 +85,7 @@ const Input = () => {
 };
 
 const CustomLayout = () => {
-  const getUploadParams = () => ({ url: "https://palace-cinema.herokuapp.com/api/movies" });
+  // const getUploadParams = () => ({ url: "https://palace-cinema.herokuapp.com/api/movies" });
 
   const [movie, setMovie] = useState(movieData);
   const [posterCollection, setPosterCollection] = useState(moviePosters);
@@ -105,7 +105,7 @@ const CustomLayout = () => {
     <AppContext.Provider value={values}>
       <Dropzone
         inputComponent={Input}
-        getUploadParams={getUploadParams}
+        // getUploadParams={getUploadParams}
         SubmitButtonComponent={Submit}
         LayoutComponent={Layout}
         onSubmit={() => {
