@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 function Show(props) {
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
+  const apiUrl = "/api/movies/" + props.match.params._id;
 
   useEffect(() => {
     setShowLoading(false);
