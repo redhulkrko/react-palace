@@ -17,7 +17,7 @@ const Submit = props => {
     // console.log(files.map(f => f.meta));
     setShowLoading(true);
     e.preventDefault();
-    const apiUrl = "/api/movies/";
+    const apiUrl = "/api/movies";
     const headers = "multipart/form-data";
     const formData = new FormData();
     formData.set("title", movie.title);
@@ -85,7 +85,7 @@ const Input = () => {
 };
 
 const CustomLayout = () => {
-  const getUploadParams = () => ({ url: "api/movies/" });
+  const getUploadParams = () => ({ url: "/api/movies" });
 
   const [movie, setMovie] = useState(movieData);
   const [posterCollection, setPosterCollection] = useState(moviePosters);
