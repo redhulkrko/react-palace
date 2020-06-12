@@ -99,7 +99,7 @@ const Create = () => {
 
     //   return () => clearTimeout(timeout.current);
     // }, []);
-    // console.log(uploadPercentage)
+    console.log(percent)
     return (
       <div className="dzu-previewContainer">
         <img
