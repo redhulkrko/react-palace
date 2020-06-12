@@ -1,29 +1,29 @@
-import React, { useState, useContext } from 'react';
-import { MyTestStore } from './App';
+import React, { useContext, useEffect, useRef } from "react";
+import { MyTestStore } from "./App";
+import { AppContext } from './context';
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import styled from "styled-components";
+import axios from "axios";
 
-import axios from 'axios';
+import { Clear } from "@material-ui/icons";
 
 // import { withRouter } from 'react-router-dom';
 // import './style.css';
 
-
-
 const MainContainer = styled.main`
-grid-area: main;
-display:grid;
+  grid-area: main;
+  display: grid;
   grid-template-columns: 1fr;
   margin: 0;
 `;
 
 const MovieForm = styled.form`
-display: grid;
-grid-template-columns: 1fr 25%;
-height: 100vh;
-width: 100%;
-margin:0;
+  display: grid;
+  grid-template-columns: 1fr 25%;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
 `;
 
 const MovieInfo = styled.div`
@@ -44,149 +44,199 @@ const HideMe = styled.div`
 `;
 
 
+const Create = () => {
+  const { user, verified, setState } = useContext(MyTestStore);
 
-const Create = (props) => {
-  const {user, verified, setState} = useContext(MyTestStore)
+  const Submit = props => {
+    const { files, onSubmit } = props;
+    const { movie, setShowLoading } = useContext(AppContext);
+    const handleSubmit = () => {
+      console.log({ movie });
+      console.log(files.map(f => f.meta));
+      const apiUrl = "http://localhost:5000/api/movies/";
+      const headers = "multipart/form-data";
+      const formData = new FormData();
+      formData.set("title", movie.title);
+      formData.set("date", movie.date);
+      formData.set("synopsis", movie.synopsis);
+      formData.set("vID", movie.vID);
+      formData.set("trailer", movie.trailer);
 
-    const initialState = { id: '', title: '', synopsis: '', trailer: '', date: '' }
-    const [movie, setMovie] = useState(initialState) 
-    const [posterCollection, setPosterCollection] = useState('');
-    const [showLoading, setShowLoading] = useState(false);
-    const apiUrl = "http://localhost:5000/api/movies/";
+      files.map(fileItem => formData.append("poster", fileItem.file));
 
-  // const saveMovie = (e) => {
-  //   setShowLoading(true);
-  //   e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.set("title", movie.title);
-  //   formData.set("synopsis", movie.synopsis);
-  //   formData.set("trailer", movie.trailer);
-  //   formData.set("id", movie.id);
-  //   formData.set("date", movie.date);
-  
-  //   for (let img in posterCollection[0]) {
-  //     formData.append("posters", posterCollection[0][img])
-  //   }
-  //   const headers = "multipart/form-data"
-  //     axios.post(apiUrl, formData, headers)
-  //     .then((result) => {
-  //       setShowLoading(false);
-  //       console.log(result);
-  //       props.history.push('/show/' + result.data.movie._id)
-  //     }).catch((error) => setShowLoading(false));
-  // };
-
-  const onChange = (e) => {
-    e.persist();
-    setMovie({...movie, [e.target.name]: e.target.value})
-    console.log(movie.title)
-}
-
-const Submit = props => {
-  const { e, files, onSubmit, movie } = props;
-
-  const handleSubmit = () => {
-    e.preventDefault();
-    console.log(files.map(f => f.meta));
-    console.log(movie);
-    onSubmit();
-    // allFiles.forEach(f => f.remove());
+      console.log(Array.from(formData));
+      axios
+        .post(apiUrl, formData, headers)
+        .then(result => {
+          setShowLoading(false);
+          console.log(result);
+          props.history.push("/show/" + result.data.movie._id);
+        })
+        .catch(error => setShowLoading(false));
+      onSubmit();
+    };
+    return (
+      <div className="dzu-submitButtonContainer">
+        <button onClick={handleSubmit} className="dzu-submitButton">
+          Submit
+        </button>
+      </div>
+    );
   };
+
+  const Preview = ({ meta, fileWithMeta }) => {
+    const { previewUrl, name, status, percent } = meta;
+    // const { uploadPercentage, setUploadPercentage } = useContext(AppContext);
+    // const timeout = useRef();
+    // console.log({ status });
+    // useEffect(() => {
+    //   const time = 10000;
+    //   if (uploadPercentage < 100) {
+    //     timeout.current = setTimeout(() => {
+    //       setUploadPercentage(uploadPercentage => uploadPercentage + 1);
+    //     }, time / 10000);
+    //   }
+
+    //   return () => clearTimeout(timeout.current);
+    // }, []);
+    // console.log(uploadPercentage)
+    return (
+      <div className="dzu-previewContainer">
+        <img
+          class="dzu-previewImage"
+          src={previewUrl}
+          alt={name}
+          title={name}
+        />
+        
+        <progress max="100" value={status === 'done' || status === 'headers_received' ? 100 : percent} />
+        {/* {status !== 'preparing' && status !== 'getting_upload_params' && status !== 'uploading' (
+          <Clear onClick={fileWithMeta.remove} />
+        )} */}
+      </div>
+    );
+  };
+
+  const Layout = ({
+    input,
+    previews,
+    submitButton,
+    dropzoneProps,
+    files,
+    extra: { maxFiles }
+  }) => {
+    return (
+      <div>
+        <div>
+          {submitButton}
+          <HideMe {...dropzoneProps}>
+            {previews}
+            {files.length < maxFiles && input}
+          </HideMe>
+        </div>
+      </div>
+    );
+  };
+
+  const MyUploader = () => {
+
+
+    return (
+        <Dropzone
+          autoUpload={false}
+          SubmitButtonComponent={Submit}
+          PreviewComponent={Preview}
+          LayoutComponent={Layout}
+          onSubmit={() => {
+            console.log("After submit?");
+          }}
+          inputContent="Drop Files (Custom Layout)"
+        />
+      
+    );
+  };
+
+
+
+
+  const { movie, setMovie, showLoading } = useContext(AppContext);
+
+
   return (
-    <div className="dzu-submitButtonContainer">
-      <button onClick={handleSubmit} className="dzu-submitButton">
-        Submit
-      </button>
-    </div>
-  );
-};
-
-const Layout = ({
-  input,
-  previews,
-  submitButton,
-  dropzoneProps,
-  files,
-  extra: { maxFiles }
-}) => {
-  return (
-    <>
-    {submitButton}
-    <HideMe>
-      <div {...dropzoneProps}>{previews}{files.length < maxFiles && input}</div>
-    </HideMe>
-    </>
-  );
-};
-
-
-
-
-const MyUploader = () => {
-  const getUploadParams = () => ({ url: "https://httpbin.org/post" });
-
-  return (
-    <Dropzone
-      getUploadParams={getUploadParams}
-      SubmitButtonComponent={Submit}
-      LayoutComponent={Layout}
-      onSubmit={() => {
-        console.log("After submit?");
-      }}
-    />
-  );
-};
-
-// const onFileChange = (files) => {
-//     let items = files.map(fileItem => fileItem.file)
-//     setPosterCollection([...posterCollection, ...items])
-// }
-
-  return (
-    <>
-       <MainContainer>
-
-            <MovieForm>
-              
-            <MovieInfo>
-            {showLoading && <span className="sr-only">Loading...</span>}    
+    // <AppContext.Provider value={values}>
+      
+      <MainContainer>
+        <MovieForm>
+          <MovieInfo>
+            {showLoading && <span className="sr-only">Loading...</span>}
             <h2 className="title">Add Movie</h2>
             <div className="wrapper">
               <span>Title</span>
-                  <input className="no-outline" type="text" name="title" value={movie.title} onChange={onChange} placeholder="Film Title"  />
+              <input
+                className="no-outline"
+                type="text"
+                name="title"
+                defaultValue={movie.title}
+                onChange={e => setMovie({ ...movie, title: e.target.value })}
+                placeholder="Film Title"
+              />
             </div>
 
             <div className="wrapper">
-            <span>Date</span>
-                <input className="no-outline" type="date" name="date" value={movie.date} onChange={onChange} />
-            </div>
-            
-            <div className="wrapper">
-            <span>Synopsis</span>
-                  <textarea className="no-outline" type="text" name="synopsis" value={movie.synopsis} onChange={onChange} placeholder="Synopsis"></textarea>
-            </div>
-            
-            <div className="wrapper">
-            <span>Movie ID</span>
-                <input className="no-outline" type="text" name="id" value={movie.id} onChange={onChange} placeholder="Veezi Film ID" />
-            </div>
-            
-       
-            <div className="wrapper">
-            <span>Trailer</span>
-                  <input className="no-outline" type="text" name="trailer" value={movie.trailer} onChange={onChange} placeholder="Trailer URL" />
+              <span>Date</span>
+              <input
+                className="no-outline"
+                type="date"
+                name="date"
+                defaultValue={movie.date}
+                onChange={e => setMovie({ ...movie, date: e.target.value })}
+              />
             </div>
 
-            </MovieInfo>
-           
-           <MoviePosters>
-                <MyUploader/>
-            </MoviePosters>       
+            <div className="wrapper">
+              <span>Synopsis</span>
+              <textarea
+                className="no-outline"
+                type="text"
+                name="synopsis"
+                defaultValue={movie.synopsis}
+                onChange={e => setMovie({ ...movie, synopsis: e.target.value })}
+                placeholder="Synopsis"
+              />
+            </div>
 
-            </MovieForm>
-        </MainContainer>
-    </>
+            <div className="wrapper">
+              <span>Movie ID</span>
+              <input
+                className="no-outline"
+                type="text"
+                name="vID"
+                defaultValue={movie.id}
+                onChange={e => setMovie({ ...movie, vID: e.target.value })}
+                placeholder="Veezi Film ID"
+              />
+            </div>
+
+            <div className="wrapper">
+              <span>Trailer</span>
+              <input
+                className="no-outline"
+                type="text"
+                name="trailer"
+                defaultValue={movie.trailer}
+                onChange={e => setMovie({ ...movie, trailer: e.target.value })}
+                placeholder="Trailer URL"
+              />
+            </div>
+          </MovieInfo>
+
+          <MoviePosters>
+            <MyUploader />
+          </MoviePosters>
+        </MovieForm>
+      </MainContainer>
+    // </AppContext.Provider>
   );
-}
+};
 
 export default Create;

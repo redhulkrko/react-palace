@@ -17,7 +17,7 @@ const Submit = props => {
     // console.log(files.map(f => f.meta));
     setShowLoading(true);
     e.preventDefault();
-    const apiUrl = "https://palace-cinema.herokuapp.com/api/movies";
+    const apiUrl = "http://localhost:5000/api/movies/";
     const headers = "multipart/form-data";
     const formData = new FormData();
     formData.set("title", movie.title);
@@ -85,8 +85,7 @@ const Input = () => {
 };
 
 const CustomLayout = () => {
-  const getUploadParams = () => { 
-    return {url: "/" } };
+  const getUploadParams = () => ({ url: "http://localhost:5000/api/movies/" });
 
   const [movie, setMovie] = useState(movieData);
   const [posterCollection, setPosterCollection] = useState(moviePosters);
