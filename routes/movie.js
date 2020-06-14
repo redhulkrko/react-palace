@@ -79,7 +79,7 @@ router.post('/', upload.array('poster'), (req, res) => {
 // @route GET api/movies/:id
 // @trailer Update movie
 // @access Public
-router.post('/:id', upload.array('posters'), (req, res) => {
+router.post('/:id', upload.array('poster'), (req, res) => {
 Movie.findByIdAndUpdate(req.params.id)
 .then(movie => {
   
@@ -128,7 +128,7 @@ Movie.findByIdAndUpdate(req.params.id)
 // @route GET api/movies/:id
 // @trailer Delete movie by id
 // @access Public
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   Movie.findByIdAndRemove(req.params.id)
     .then(() => res.json('Movie entry deleted successfully'))
     .catch(err => res.status(404).json({ error: 'No such a movie' }));

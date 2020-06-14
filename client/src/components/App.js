@@ -18,7 +18,7 @@ import AdminPage from "./xPage";
 import EditPage from "./EditPage";
 import Create from "./Create";
 // import CreateForm from "./CreateForm";
-import Edit from "./Edit";
+import Edit from "./EditForm";
 import Show from "./Show";
 import List from "./List";
 import Reviews from "./Reviews";
@@ -73,7 +73,7 @@ export default ((props) => {
           <ProtectedRoute exact path="/admin" component={Dashboard} layout={AdminPage} />
           <ProtectedRoute exact path="/admin/movies" component={Movies} layout={AdminPage} />
           <ProtectedRoute exact path="/admin/movies/new" component={Create} layout={EditPage} />
-          <ProtectedRoute exact path="/admin/movies/edit/:_id" component={Edit} layout={AdminPage} />
+          <ProtectedRoute exact path="/admin/movies/edit/:_id" component={Edit} layout={EditPage} />
           <ProtectedRoute exact path='/admin/movies/show/:_id' component={Show} layout={AdminPage} />
 
           <ProtectedRoute exact path="/admin/reviews" component={Reviews} layout={AdminPage} />
