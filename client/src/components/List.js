@@ -1,13 +1,62 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { AppContext } from './context';
 import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
+import styled from "styled-components";
 import ListRow from './ListRow';
 
-const List = props => {
-  // const [data, setData] = useState([]);
-  // const [showLoading, setShowLoading] = useState(true);
+const AdminList = styled.ul`
+  list-style: none;
+  margin: 1rem 0;
+`;
+
+const Tab = styled.button`
+  font-size: 1em;
+  padding: 5px 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  background: white;
+  border: 0;
+  outline: 0;
+  ${({ active }) =>
+    active &&`
+    border-bottom: 2px solid purple;
+    opacity: 1;
+  `}
+`;
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const tabs = [
+  {
+    title: "Now Showing",
+    label: "Now",
+    content: date => item =>
+      date > Date.parse(item.OpeningDate.substring(0, 10))
+  },
+  {
+    title: "Coming Soon",
+    label: "Soon",
+    content: date => item =>
+      date < Date.parse(item.OpeningDate.substring(0, 10))
+  }
+];
+
+const List = () => {
+  const [active, setActive] = useState(tabs[0]);
+
   const { movies, setMovies, showLoading, setShowLoading } = useContext(AppContext);
+  const date = new Date();
+
+  
+
+  let active_films = useMemo(() => {
+    let all_films = movies.filter(active.content(date));
+
+    return all_films;
+  }, [movies, active, date]);
 
   const apiUrl = "http://localhost:5000/api/movies";
 
@@ -15,43 +64,35 @@ const List = props => {
     async function fetchMovies() {
       const result = await axios(apiUrl);
       setMovies(result.data);      
-      console.log(result.data);
       setShowLoading(false);
     }
     fetchMovies();
   }, []); 
 
-
-
-
-  // const deleteMovie = () => {
-  //   setShowLoading(true);
-  //   axios.delete('http://localhost:3000/api/movies/' + data._id)
-  //           .then((res) => {
-  //               console.log('Student successfully deleted!')
-  //           }).catch((error) => {
-  //               console.log(error)
-  //           })
-  // };
-
-
-  // const showDetail = (id) => {
-  //   props.history.push({
-  //     pathname: '/show/' + id
-  //   });
-  // }
   return (
     <div>
-    {showLoading && <span className="sr-only">Loading...</span>}    
-      <div>
-        {movies.map((res, i) => {
+    {showLoading && <span className="sr-only">Loading...</span>}   
+    <div className="tab-menu">
+            <ButtonGroup>
+              {tabs.map(tab => (
+                <Tab
+                  key={tab.label}
+                  active={active === tab}
+                  onClick={() => setActive(tab)}
+                >
+                  {tab.label}
+                </Tab>
+              ))}
+            </ButtonGroup>
+        </div> 
+      <AdminList>
+        {active_films.map((res, i) => {
           return <ListRow obj={res} key={i} />;
-          // <div key={idx}><Link to={`/admin/movies/edit/${item._id}`}>{item.title}</Link><Link onClick={deleteMovie}>Delete</Link></div>
         })}
-    </div>
+      </AdminList>
     </div>         
 
   );
 }
 
-export default withRouter(List);
+export default List;
