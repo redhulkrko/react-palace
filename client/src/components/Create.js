@@ -53,11 +53,11 @@ const Submit = props => {
     const apiUrl = "http://localhost:5000/api/movies/";
     const headers = "multipart/form-data";
     const formData = new FormData();
-    formData.set("title", movie.title);
-    formData.set("date", movie.date);
-    formData.set("synopsis", movie.synopsis);
-    formData.set("vID", movie.vID);
-    formData.set("trailer", movie.trailer);
+    formData.set("Title", movie.Title);
+    formData.set("OpeningDate", movie.OpeningDate);
+    formData.set("Synopsis", movie.Synopsis);
+    formData.set("Id", movie.Id);
+    formData.set("FilmTrailerUrl", movie.FilmTrailerUrl);
 
     files.map(fileItem => formData.append("poster", fileItem.file));
 
@@ -162,9 +162,9 @@ const Create = () => {
             <input
               className="no-outline"
               type="text"
-              name="title"
-              defaultValue={movie.title}
-              onChange={e => setMovie({ ...movie, title: e.target.value })}
+              name="Title"
+              defaultValue={movie.Title}
+              onChange={e => setMovie({ ...movie, Title: e.target.value })}
               placeholder="Film Title"
             />
           </div>
@@ -174,9 +174,9 @@ const Create = () => {
             <input
               className="no-outline"
               type="date"
-              name="date"
-              defaultValue={movie.date}
-              onChange={e => setMovie({ ...movie, date: e.target.value })}
+              name="OpeningDate"
+              defaultValue={movie.OpeningDate}
+              onChange={e => setMovie({ ...movie, OpeningDate: e.target.value })}
             />
           </div>
 
@@ -185,9 +185,9 @@ const Create = () => {
             <textarea
               className="no-outline"
               type="text"
-              name="synopsis"
-              defaultValue={movie.synopsis}
-              onChange={e => setMovie({ ...movie, synopsis: e.target.value })}
+              name="Synopsis"
+              defaultValue={movie.Synopsis}
+              onChange={e => setMovie({ ...movie, Synopsis: e.target.value })}
               placeholder="Synopsis"
             />
           </div>
@@ -197,9 +197,9 @@ const Create = () => {
             <input
               className="no-outline"
               type="text"
-              name="vID"
-              defaultValue={movie.id}
-              onChange={e => setMovie({ ...movie, vID: e.target.value })}
+              name="Id"
+              defaultValue={movie.Id}
+              onChange={e => setMovie({ ...movie, Id: e.target.value })}
               placeholder="Veezi Film ID"
             />
           </div>
@@ -209,9 +209,9 @@ const Create = () => {
             <input
               className="no-outline"
               type="text"
-              name="trailer"
-              defaultValue={movie.trailer}
-              onChange={e => setMovie({ ...movie, trailer: e.target.value })}
+              name="FilmTrailerUrl"
+              defaultValue={movie.FilmTrailerUrl}
+              onChange={e => setMovie({ ...movie, FilmTrailerUrl: e.target.value })}
               placeholder="Trailer URL"
             />
           </div>

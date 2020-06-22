@@ -26,11 +26,11 @@ const Submit = (props) => {
   
       const headers = "multipart/form-data";
       const formData = new FormData();
-      formData.set("title", movie.title);
-      formData.set("date", movie.date);
-      formData.set("synopsis", movie.synopsis);
-      formData.set("vID", movie.vID);
-      formData.set("trailer", movie.trailer);
+      formData.set("Title", movie.Title);
+      formData.set("OpeningDate", movie.OpeningDate);
+      formData.set("Synopsis", movie.Synopsis);
+      formData.set("Id", movie.Id);
+      formData.set("FilmTrailerUrl", movie.FilmTrailerUrl);
   
       files.map(fileItem => formData.append("poster", fileItem.file));
   

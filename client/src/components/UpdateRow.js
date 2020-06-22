@@ -15,8 +15,8 @@ const UpdateRow = props => {
         <>
         <ListItem>
             <div>
-            <h4>{props.obj.title}</h4>
-            {(new Date(props.obj.OpeningDate)).toLocaleDateString('en', {  day: '2-digit', month: 'short' })}
+            <h4>{props.obj.Title}</h4>
+            {(new Date(props.obj.Updated)).toLocaleDateString('en', {  day: '2-digit', month: 'short' })}
             </div>
         </ListItem>
         </>

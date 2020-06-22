@@ -48,105 +48,6 @@ const HideMe = styled.div`
 `;
 
 
-
-// const Submit = props => {
-//   const { files, onSubmit } = props;
-//   const { movie, setShowLoading, setMovie } = useContext(AppContext);
-//   const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
-
-//   useEffect(() => {
-//     setShowLoading(false);
-//     const fetchData = async () => {
-//       const result = await axios(apiUrl);
-//       setMovie(result.data);      
-//       console.log(result.data);
-//       setShowLoading(false);
-//     };
-
-//     fetchData();
-//   }, [apiUrl]);
-//   const handleSubmit = () => {
-//     console.log({ movie });
-//     console.log(files.map(f => f.meta));
-
-//     const headers = "multipart/form-data";
-//     const formData = new FormData();
-//     formData.set("title", movie.title);
-//     formData.set("date", movie.date);
-//     formData.set("synopsis", movie.synopsis);
-//     formData.set("vID", movie.vID);
-//     formData.set("trailer", movie.trailer);
-
-//     files.map(fileItem => formData.append("poster", fileItem.file));
-
-//     console.log(Array.from(formData));
-//     axios
-//       .post(apiUrl, formData, headers)
-//       .then(result => {
-//         setShowLoading(false);
-//         console.log(result);
-//         props.history.push("/show/" + result.data.movie._id);
-//       })
-//       .catch(error => setShowLoading(false));
-//     onSubmit();
-//   };
-//   return (
-//     <div className="dzu-submitButtonContainer">
-//       <button onClick={handleSubmit} className="dzu-submitButton">
-//         Submit
-//       </button>
-//     </div>
-//   );
-// };
-
-// const Preview = ({ meta, fileWithMeta }) => {
-//   const { previewUrl, name, status, percent } = meta;
-//   return (
-//     <div className="dzu-previewContainer">
-//       <img class="dzu-previewImage" src={previewUrl} alt={name} title={name} />
-//       {status === 'done' ? <Clear onClick={fileWithMeta.remove} /> : ""}
-//     </div>
-//   );
-// };
-
-// const Layout = ({
-//   input,
-//   previews,
-//   submitButton,
-//   dropzoneProps,
-//   files,
-//   extra: { maxFiles }
-// }) => {
-//   return (
-//     <div>
-//       <div>
-//         {submitButton}
-//         <HideMe>
-//           <div  {...dropzoneProps}>
-//           {previews}
-//           {files.length < maxFiles && input}
-//           </div>
-//         </HideMe>
-//       </div>
-//     </div>
-//   );
-// };
-
-// const MyUploader = () => {
-//   return (
-//     <Dropzone
-//       autoUpload={false}
-//       SubmitButtonComponent={Submit}
-//       PreviewComponent={Preview}
-//       LayoutComponent={Layout}
-//       onSubmit={() => {
-//         console.log("After submit?");
-//       }}
-//       inputContent="Drop Files (Custom Layout)"
-//     />
-//   );
-// };
-
 const Edit = (props) => {
   const { user, verified, setState } = useContext(MyTestStore);
   const { movie, setMovie, showLoading, setShowLoading } = useContext(AppContext);
@@ -178,9 +79,9 @@ const Edit = (props) => {
             <input
               className="no-outline"
               type="text"
-              name="title"
-              defaultValue={movie.title}
-              onChange={e => setMovie({ ...movie, title: e.target.value })}
+              name="Title"
+              value={movie.Title}
+              onChange={e => setMovie({ ...movie, Title: e.target.value })}
               placeholder="Film Title"
             />
           </div>
@@ -190,9 +91,9 @@ const Edit = (props) => {
             <input
               className="no-outline"
               type="date"
-              name="date"
-              defaultValue={movie.date}
-              onChange={e => setMovie({ ...movie, date: e.target.value })}
+              name="OpeningDate"
+              value={movie.OpeningDate}
+              onChange={e => setMovie({ ...movie, OpeningDate: e.target.value })}
             />
           </div>
 
@@ -201,9 +102,9 @@ const Edit = (props) => {
             <textarea
               className="no-outline"
               type="text"
-              name="synopsis"
-              defaultValue={movie.synopsis}
-              onChange={e => setMovie({ ...movie, synopsis: e.target.value })}
+              name="Synopsis"
+              value={movie.Synopsis}
+              onChange={e => setMovie({ ...movie, Synopsis: e.target.value })}
               placeholder="Synopsis"
             />
           </div>
@@ -213,9 +114,9 @@ const Edit = (props) => {
             <input
               className="no-outline"
               type="text"
-              name="vID"
-              defaultValue={movie.id}
-              onChange={e => setMovie({ ...movie, vID: e.target.value })}
+              name="Id"
+              value={movie.Id}
+              onChange={e => setMovie({ ...movie, Id: e.target.value })}
               placeholder="Veezi Film ID"
             />
           </div>
@@ -225,9 +126,9 @@ const Edit = (props) => {
             <input
               className="no-outline"
               type="text"
-              name="trailer"
-              defaultValue={movie.trailer}
-              onChange={e => setMovie({ ...movie, trailer: e.target.value })}
+              name="FilmTrailerUrl"
+              value={movie.FilmTrailerUrl}
+              onChange={e => setMovie({ ...movie, FilmTrailerUrl: e.target.value })}
               placeholder="Trailer URL"
             />
           </div>

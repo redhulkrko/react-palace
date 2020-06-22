@@ -27,7 +27,7 @@ const List = () => {
   }, []); 
 
   const updates = movies.sort(
-    (a, b) => Date.parse(a.OpeningDate) - Date.parse(b.OpeningDate)
+    (a, b) => Date.parse(b.Updated) - Date.parse(a.Updated)
   );
 
   return (

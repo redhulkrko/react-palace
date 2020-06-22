@@ -57,15 +57,15 @@ router.post('/', upload.array('poster'), (req, res) => {
 
   // console.log(req.files);
 
-  var date = new Date(req.body.date);
+  // var date = new Date(req.body.OpeningDate);
   // var isoString = date.toISOString();
 
   var movieData = {
-    id: req.body.id,
-    title: req.body.title,
-    synopsis: req.body.synopsis,
-    trailer: req.body.trailer,
-    OpeningDate: date,
+    Id: req.body.Id,
+    Title: req.body.Title,
+    Synopsis: req.body.Synopsis,
+    FilmTrailerUrl: req.body.FilmTrailerUrl,
+    OpeningDate: req.body.OpeningDate,
     poster:  filenames[a],
     slide: filenames[b]
   };
@@ -83,12 +83,13 @@ router.post('/:id', upload.array('poster'), (req, res) => {
 Movie.findByIdAndUpdate(req.params.id)
 .then(movie => {
   
-  movie.id = req.body.id,
-  movie.title = req.body.title,
-  movie.synopsis = req.body.synopsis,
-  movie.trailer = req.body.trailer,
-  movie.OpeningDate = req.body.date
+    movie.Id = req.body.Id,
+    movie.Title = req.body.Title,
+    movie.Synopsis = req.body.Synopsis,
+    movie.FilmTrailerUrl = req.body.FilmTrailerUrl
 
+  console.log(req.files);
+  console.log(req.files.length);
   if (req.files.length > 0) {
     console.log('hi');
     var filenames = req.files.map(function(file) {
@@ -103,7 +104,7 @@ Movie.findByIdAndUpdate(req.params.id)
         return item.indexOf("slide")!==-1;
     }));
 
-
+    console.log(a);
 
     if (a >= 0) {
       movie.poster = filenames[a]

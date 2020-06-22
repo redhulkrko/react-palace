@@ -5,7 +5,7 @@ export const AppContext = React.createContext({movie: {}});
 export const AppContextProvider = (props) => {
 
 
-const movieData = { title: "", date: "", synopsis: "", vID: "", trailer: "" };
+const movieData = { Title: "", OpeningDate: "", Synopsis: "", Id: "", FilmTrailerUrl: "" };
 const allMovies = [];
 
 const [movie, setMovie] = useState(movieData);

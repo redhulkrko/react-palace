@@ -38,7 +38,7 @@ const ListRow = props => {
         <ListItem>
             <ListImg src={"http://localhost/media/" + props.obj.slide}/>
             <div>
-            <h4>{props.obj.title}</h4>
+            <h4>{props.obj.Title}</h4>
             <p><Link className="edit-link" to={"/admin/movies/edit/" + props.obj._id}>
                             Edit
                         </Link></p>
