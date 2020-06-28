@@ -13,7 +13,46 @@ const HideMe = styled.div`
   border: 1px solid lavender;
 `;
 
-const Submit = (props) => {
+const SubmitMovie = props => {
+  const { files, onSubmit } = props;
+  const { movie, setShowLoading } = useContext(AppContext);
+  const handleSubmit = () => {
+    console.log({ movie });
+    console.log(files.map(f => f.meta));
+    const apiUrl = "http://localhost:5000/api/movies/";
+    const headers = "multipart/form-data";
+    const formData = new FormData();
+    formData.set("Title", movie.Title);
+    formData.set("OpeningDate", movie.OpeningDate);
+    formData.set("Synopsis", movie.Synopsis);
+    formData.set("Id", movie.Id);
+    formData.set("FilmTrailerUrl", movie.FilmTrailerUrl);
+    formData.set("Rating", movie.Rating);
+    formData.set("Duration", movie.Duration);
+
+    files.map(fileItem => formData.append("poster", fileItem.file));
+
+    console.log(Array.from(formData));
+    axios
+      .post(apiUrl, formData, headers)
+      .then(result => {
+        setShowLoading(false);
+        console.log(result);
+        props.history.push("/show/" + result.data.movie._id);
+      })
+      .catch(error => setShowLoading(false));
+    onSubmit();
+  };
+  return (
+    <div className="dzu-submitButtonContainer">
+      <button onClick={handleSubmit} className="dzu-submitButton">
+        Submit
+      </button>
+    </div>
+  );
+};
+
+const EditMovie = (props) => {
     const { files, onSubmit } = props;
     const { movie, setShowLoading, setMovie } = useContext(AppContext);
     const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
@@ -31,6 +70,8 @@ const Submit = (props) => {
       formData.set("Synopsis", movie.Synopsis);
       formData.set("Id", movie.Id);
       formData.set("FilmTrailerUrl", movie.FilmTrailerUrl);
+      formData.set("Rating", movie.Rating);
+      formData.set("Duration", movie.Duration);
   
       files.map(fileItem => formData.append("poster", fileItem.file));
   
@@ -103,4 +144,4 @@ const Submit = (props) => {
     );
   };
   
-  export {Submit, Preview, Layout};
+  export {SubmitMovie, EditMovie, Preview, Layout};

@@ -93,6 +93,13 @@ span {
   margin-bottom: 27px;
 }
 
+.wrapper-select {
+  width: 100%;
+  position: relative;
+  padding-bottom: 0;
+  margin: 20px 0;
+}
+
 .upload-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -111,8 +118,12 @@ span {
   cursor: pointer;
 }
 
+.css-1okebmr-indicatorSeparator {
+  display: none;
+}
+
 .avMenu::after {
-    position: absolute;
+  position: absolute;
   content: "";
   width: 6px;
   height: 6px;

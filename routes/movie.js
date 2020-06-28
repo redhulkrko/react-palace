@@ -66,6 +66,8 @@ router.post('/', upload.array('poster'), (req, res) => {
     Synopsis: req.body.Synopsis,
     FilmTrailerUrl: req.body.FilmTrailerUrl,
     OpeningDate: req.body.OpeningDate,
+    Rating: req.body.Rating,
+    Duration: req.body.Duration,
     poster:  filenames[a],
     slide: filenames[b]
   };
@@ -86,7 +88,9 @@ Movie.findByIdAndUpdate(req.params.id)
     movie.Id = req.body.Id,
     movie.Title = req.body.Title,
     movie.Synopsis = req.body.Synopsis,
-    movie.FilmTrailerUrl = req.body.FilmTrailerUrl
+    movie.FilmTrailerUrl = req.body.FilmTrailerUrl,
+    movie.Rating = req.body.Rating,
+    movie.Duration = req.body.Duration,
 
   console.log(req.files);
   console.log(req.files.length);
