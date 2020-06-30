@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { createGlobalStyle } from 'styled-components';
 
-import Header from './xHeader';
-import SideNav from './xSide';
-import Footer from './xFooter';
+import Header from './Header';
+import SideNav from './Side';
+import Footer from './Footer';
 
 const GlobalStyle = createGlobalStyle`
     * {

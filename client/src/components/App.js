@@ -3,23 +3,23 @@ import { Route, Switch, Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { checkLoggedIn } from "../util/session";
 
-import "./xApp.css";
+import "./App.css";
 // import "../script";
 
 import { AuthRoute, ProtectedRoute } from "./Login";
-import AddFilm from "./AddFilm";
-import Movies from "./xMovies";
+// import AddFilm from "./AddFilm";
+import Movies from "./Movies";
 import Welcome from "./Welcome";
 import Login from "./Login";
 import Signup from "./Signup";
-import Admin from "./xAdmin";
-import Dashboard from "./xDashboard";
-import AdminPage from "./xPage";
+import Admin from "./Admin";
+import Dashboard from "./Dashboard";
+import AdminPage from "./Page";
 import EditPage from "./EditPage";
 import Create from "./Create";
 // import CreateForm from "./CreateForm";
-import Edit from "./EditForm";
-import Show from "./Show";
+import Edit from "./Edit";
+// import Show from "./unused/Show";
 import List from "./List";
 import Reviews from "./Reviews";
 import BoxOffice from "./BoxOffice";
@@ -74,7 +74,7 @@ export default ((props) => {
           <ProtectedRoute exact path="/admin/movies" component={Movies} layout={AdminPage} />
           <ProtectedRoute exact path="/admin/movies/new" component={Create} layout={EditPage} />
           <ProtectedRoute exact path="/admin/movies/edit/:_id" component={Edit} layout={EditPage} />
-          <ProtectedRoute exact path='/admin/movies/show/:_id' component={Show} layout={AdminPage} />
+          {/* <ProtectedRoute exact path='/admin/movies/show/:_id' component={Show} layout={AdminPage} /> */}
 
           <ProtectedRoute exact path="/admin/reviews" component={Reviews} layout={AdminPage} />
           <ProtectedRoute exact path="/admin/box-office" component={BoxOffice} layout={AdminPage} />

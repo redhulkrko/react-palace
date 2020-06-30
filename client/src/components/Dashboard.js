@@ -1,73 +1,38 @@
 import React from "react";
+import styled from "styled-components";
 import { APIContextProvider } from "./apiContext";
 
-import styled, { createGlobalStyle } from 'styled-components';
+import MovieCarousel from "./MovieCarousel";
 
-import Overview from "./Overview";
-import Updates from "./Updates";
-import Films from "./Films";
-import Stats from "./Stats";
-import Today from "./Today";
-import BoxOffice from "./BoxOffice";
-import Reviews from "./Reviews";
-
-const GlobalStyle = createGlobalStyle`
-
-  body {
-    font-family: "Roboto", sans-serif;
-  }
-
+const MainContainer = styled.main`
+grid-area: main;
+display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px auto;
+  height: 100vh;
+  margin: 0;
+  grid-template-areas: "movies movies" "overview office";
+  padding: 20px;
 `;
 
-// const Board = styled.div`
-//     column-count: 1;
-//     column-gap: 20px;
-//     margin: 20px;
-
-//     @media (min-width: 992px) {
-//         column-count: 2;
-//     }
-
-//     @media (min-width: 1200px) {
-//         column-count: 2;
-//     }
-// `;
-
-const Board = styled.div`
-    column-count: 1;
-    display: grid;
-    display: -ms-grid;
-    grid-row-gap: 16px;
-    grid-column-gap: 16px;
-    margin: 20px;
-
-    @media (min-width: 992px) {
-        column-count: 2;
-    }
-
-    @media (min-width: 1200px) {
-      grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr 1.3fr;
-      grid-template-rows: 0.2fr 0.2fr 1.8fr 0.2fr 0.2fr 1fr .9fr 0.2fr;
-    }
+const Updates = styled.div`
+  grid-area: updates;
+  box-shadow: 0 1px 0 0 #eaedf3;
+  background: purple;
 `;
-
-
 
 const Dashboard = (props) => {
   return (
 <>
 <APIContextProvider>
- <GlobalStyle/>
- <Board className="dashboard">
-    <Overview/>
-    <Today/>
-    <Films/>
-    <BoxOffice/>
-    <Updates/>
-    <Reviews/>
-    <Stats/>
- </Board>
- </APIContextProvider>
+
+ <MainContainer>
+        <MovieCarousel/>
+        <div class="overview"></div>
+                <div class="office"></div>
+</MainContainer>
+<Updates/>
+</APIContextProvider>
 </>
 )};
 export default Dashboard;

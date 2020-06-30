@@ -1,5 +1,5 @@
 import React from "react";
-import "./xApp.css";
+import "./App.css";
 
 
 const Avatar = ({ children, ...props }) => <div className="avMenu" {...props}>{children}</div>;

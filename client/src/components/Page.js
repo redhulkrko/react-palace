@@ -22,27 +22,33 @@ const Container = styled.div`
 `;
 
 const Page = styled.div`
-    position: relative;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 50px 1fr 50px;
-    grid-template-areas: 'header' 'main' 'footer';
-    height: 100vh;
-    overflow-x: hidden;
+display: grid;
+grid-template-columns: 1fr;
+grid-template-rows: 50px 1fr 50px;
+grid-template-areas:
+'header'
+'main'
+'footer';
+height: 100vh;
 
-    @media (min-width: 1200px) {
-        display: grid;
-        grid-template-columns: 240px calc(100% - 240px);
-        grid-template-rows: 50px 1fr 50px;
-        grid-template-areas: 'sidenav header' 'sidenav main' 'sidenav footer';
-        height: 100vh;
-    }
+@media (min-width: 992px) {
+  grid-template-columns: 1fr 25%;
+  grid-template-rows: 50px 1fr 50px;
+  grid-template-areas:
+  'header header'
+  'main updates'
+  'footer footer';
+}
+
+@media (min-width: 1200px) {
+    grid-template-columns: 60px 1fr 25%;
+    grid-template-areas:
+      "sidenav header header"
+      "sidenav main updates"
+      "sidenav footer footer";
+}
 `;
 
-const Main = styled.div`
-    grid-area: main;
-    background-color: #8fd4d9;
-`;
 
 const AdminPage = ({ logout, session, children }) => (
     <>
@@ -51,9 +57,7 @@ const AdminPage = ({ logout, session, children }) => (
         <Page>
             <Header/>
             <SideNav/>
-            <Main>
                 {children}
-            </Main>
             <Footer/>
         </Page>
     </Container>
