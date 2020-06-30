@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useContext } from "react";
-import context from "./apiContext";
+import context from "./data/apiContext";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import {

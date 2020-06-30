@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
-import { AppContext } from './context';
+import { AppContext } from './data/Context';
 import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
 import styled from "styled-components";

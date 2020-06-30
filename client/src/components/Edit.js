@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { MyTestStore } from "./App";
-import { AppContext } from './context';
-import {EditMovie, Preview, Layout} from './FormHandlers';
+import { AppContext } from './data/Context';
+import {EditMovie, Preview, Layout} from './data/FormHandlers';
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import styled from "styled-components";

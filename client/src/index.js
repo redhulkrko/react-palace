@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
-import { AppContextProvider } from './components/context';
+import { AppContextProvider } from './components/data/Context';
 import { BrowserRouter } from 'react-router-dom';
 
 

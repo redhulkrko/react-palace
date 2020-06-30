@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { MyTestStore } from "./App";
-import { AppContext } from './context';
-import {SubmitMovie, Preview, Layout} from './FormHandlers';
+import { AppContext } from './data/Context';
+import {SubmitMovie, Preview, Layout} from './data/FormHandlers';
 import "react-dropzone-uploader/dist/styles.css";
 import Select from 'react-select';
 

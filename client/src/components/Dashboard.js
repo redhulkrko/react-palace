@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { APIContextProvider } from "./apiContext";
+import { APIContextProvider } from "./data/apiContext";
 
 import MovieCarousel from "./MovieCarousel";
 
