@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { AppContext } from './data/Context';
+import { MovieContext } from './data/movieContext';
 import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
@@ -12,27 +12,27 @@ const AdminList = styled.ul`
 `;
 
 const List = () => {
-  const { movies, setMovies, showLoading, setShowLoading } = useContext(AppContext);
+  const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
 
   const apiUrl = "http://localhost:5000/api/movies";
 
   useEffect(() => {
     async function fetchMovies() {
       const result = await axios(apiUrl);
-      setMovies(result.data);      
+      setMovieFeed(result.data);      
       console.log(result.data);
-      setShowLoading(false);
+      setLoading(false);
     }
     fetchMovies();
   }, []); 
 
-  const updates = movies.sort(
+  const updates = movieFeed.sort(
     (a, b) => Date.parse(b.Updated) - Date.parse(a.Updated)
   );
 
   return (
     <div>
-    {showLoading && <span className="sr-only">Loading...</span>}    
+    {loading && <span className="sr-only">Loading...</span>}    
       <AdminList>
         {updates.map((res, i) => {
           return <UpdateRow obj={res} key={i} />;

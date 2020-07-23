@@ -40,7 +40,7 @@ router.get('/:id', (req, res) => {
 router.post('/', upload.array('poster'), (req, res) => {
 
   var filenames = req.files.map(function(file) {
-    return file.filename; // or file.originalname
+    return 'http://localhost/media/' + file.filename; // or file.originalname
   });
 
   var a = (filenames.findIndex(function(item){
@@ -61,16 +61,19 @@ router.post('/', upload.array('poster'), (req, res) => {
   // var isoString = date.toISOString();
 
   var movieData = {
-    Id: req.body.Id,
     Title: req.body.Title,
     Synopsis: req.body.Synopsis,
     FilmTrailerUrl: req.body.FilmTrailerUrl,
     OpeningDate: req.body.OpeningDate,
-    Rating: req.body.Rating,
+    Rating: (req.body.Rating) ? req.body.Rating : 'TBC',
     Duration: req.body.Duration,
-    poster:  filenames[a],
+    FilmPosterUrl:  filenames[a],
     slide: filenames[b]
   };
+
+  if (req.body.Id != 'N/A') {
+    movieData.Id = req.body.Id;
+  }
 
   let movie = new Movie(movieData);
   movie.save()
@@ -91,13 +94,15 @@ Movie.findByIdAndUpdate(req.params.id)
     movie.FilmTrailerUrl = req.body.FilmTrailerUrl,
     movie.Rating = req.body.Rating,
     movie.Duration = req.body.Duration,
+    
 
   console.log(req.files);
   console.log(req.files.length);
+  
   if (req.files.length > 0) {
     console.log('hi');
     var filenames = req.files.map(function(file) {
-      return file.filename; // or file.originalname
+      return 'http://localhost/media/' + file.filename; // or file.originalname
     });
 
     var a = (filenames.findIndex(function(item){
@@ -111,7 +116,7 @@ Movie.findByIdAndUpdate(req.params.id)
     console.log(a);
 
     if (a >= 0) {
-      movie.poster = filenames[a]
+      movie.FilmPosterUrl = filenames[a]
     }
 
     if (b >= 0) {

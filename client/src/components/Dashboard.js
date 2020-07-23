@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { APIContextProvider } from "./data/apiContext";
 
 import MovieCarousel from "./MovieCarousel";
+import Updates from './Updates'
+
 
 const MainContainer = styled.main`
 grid-area: main;
@@ -15,9 +17,10 @@ display:grid;
   padding: 20px;
 `;
 
-const Updates = styled.div`
+const UpdateContainer = styled.div`
   grid-area: updates;
   box-shadow: 0 1px 0 0 #eaedf3;
+  padding: 20px;
   background: purple;
 `;
 
@@ -31,7 +34,10 @@ const Dashboard = (props) => {
         <div class="overview"></div>
                 <div class="office"></div>
 </MainContainer>
+<UpdateContainer>
+<h1>Updates</h1>
 <Updates/>
+</UpdateContainer>
 </APIContextProvider>
 </>
 )};

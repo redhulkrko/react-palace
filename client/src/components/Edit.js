@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { MyTestStore } from "./App";
-import { AppContext } from './data/Context';
+import { MovieContext } from './data/movieContext';
 import {EditMovie, Preview, Layout} from './data/FormHandlers';
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
@@ -88,7 +88,7 @@ const HideMe = styled.div`
 
 const Edit = (props) => {
   const { user, verified, setState } = useContext(MyTestStore);
-  const { movie, setMovie, showLoading, setShowLoading } = useContext(AppContext);
+  const { movie, setMovie, loading, setLoading, apiMoveez } = useContext(MovieContext);
   const { match } = props;
   const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
 
@@ -101,9 +101,18 @@ const Edit = (props) => {
     { label: 'TBC', value: 'TBC' },
   ]
 
+  const optionsNa = [{label: 'N/A', value: 'N/A'}];
+  const optionsId = [...optionsNa, ...apiMoveez.map(vzMov => ({ label: vzMov.Title, value: vzMov.Id }))];
+
+
+
   console.log(movie);
-  function onChangeFunc(optionSelected) {
+  function onChangeRating(optionSelected) {
     setMovie({ ...movie, Rating: optionSelected.value })
+  }  
+  
+  function onChangeId(optionIdSelected) {
+    setMovie({ ...movie, Id: optionIdSelected.value })
   }
 
 
@@ -112,21 +121,23 @@ const Edit = (props) => {
       const result = await axios(apiUrl);
       setMovie(result.data);      
       console.log(result.data);
-      setShowLoading(false);
+      setLoading(false);
     }
     fetchMovie();
-  }, []); 
-  
-  const selectedOption = {value: movie.Rating, label: movie.Rating};
+  }, []);
 
-  console.log(selectedOption);
+  const vCheck = apiMoveez.filter(x => x.Id === movie.Id).map(x => x.Title);
+  console.log(vCheck);
+  const selectedOption = {value: movie.Rating, label: movie.Rating};
+  const selectedId = {value: movie.Id, label: (vCheck.length > 0) ? vCheck : 'N/A'};
+
   return (
     // <AppContext.Provider value={values}>
 
     <MainContainer>
       <MovieForm>
         <MovieInfo>
-          {showLoading && <span className="sr-only">Loading...</span>}
+          {loading && <span className="sr-only">Loading...</span>}
           <PageTitle>Edit Movie</PageTitle>
           <TitleInput>
           <div className="wrapper">
@@ -171,7 +182,7 @@ const Edit = (props) => {
 
           <CertInput>
           <div class="wrapper-select">
-          <Select name="Rating" options={optionsDefault} value={selectedOption} onChange={onChangeFunc} />
+          <Select name="Rating" options={optionsDefault} value={selectedOption} onChange={onChangeRating} />
 				</div>
         </CertInput>          
         <TimeInput>
@@ -188,19 +199,11 @@ const Edit = (props) => {
           </div>
         </TimeInput>
 
-          <IDInput>
-          <div className="wrapper">
-            <span>Movie ID</span>
-            <input
-              className="no-outline"
-              type="text"
-              name="Id"
-              value={movie.Id}
-              onChange={e => setMovie({ ...movie, Id: e.target.value })}
-              placeholder="Veezi Film ID"
-            />
-          </div>
-          </IDInput>
+        <IDInput>
+          <div class="wrapper-select">
+          <Select name="Id" options={optionsId} value={selectedId} onChange={onChangeId} />
+				</div>
+        </IDInput>
 
           <TrailerInput>
           <div className="wrapper">

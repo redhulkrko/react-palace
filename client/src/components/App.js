@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Route, Switch, Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { checkLoggedIn } from "../util/session";
+import { MovieProvider } from "./data/movieContext";
 
 import "./App.css";
 // import "../script";
@@ -62,6 +63,8 @@ export default ((props) => {
 
     return (
   <>
+      <MovieProvider>
+
     <MyTestStore.Provider value={{...state, setState}}>
       <Router history={history}>
         <Switch>
@@ -83,6 +86,7 @@ export default ((props) => {
         </Switch>
       </Router>
     </MyTestStore.Provider>
+    </MovieProvider>
   </>
 )})
 

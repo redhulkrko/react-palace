@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useContext } from "react";
-import context from "./data/apiContext";
+import { AppContext } from './data/AppContext';
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import {
@@ -49,6 +49,8 @@ const tabs = [
   }
 ];
 
+console.log(tabs)
+
 const dummyData = new Array(4).fill({
   Id: "00000001",
   Title: "Placeholder",
@@ -75,18 +77,23 @@ function MovieCarousel() {
       items: 5
     }
   };
-  const { films, loading } = useContext(context);
+  const { films, loading } = useContext(AppContext);
   const date = new Date();
 
   console.log(films);
   const [active, setActive] = useState(tabs[0]);
 
   let active_films = useMemo(() => {
-    let all_films = films.filter(active.content(date));
+    let all_films = films.filter(active.content(date)).sort(
+      (a, b) =>
+        Date.parse(a.OpeningDate.substring(0, 10)) -
+        Date.parse(b.OpeningDate.substring(0, 10))
+    );
 
     if (all_films.length < 5) {
       all_films = all_films.concat(dummyData);
     }
+
     return all_films;
   }, [films, active, date]);
 
@@ -141,12 +148,6 @@ function MovieCarousel() {
                           day: "2-digit",
                           month: "short"
                         })}
-                      </span>
-                      <span class="icons">
-                        <Visibility />
-                        <Create />
-                        <Delete />
-                        <PlayCircleFilled />
                       </span>
                     </div>
                   </div>

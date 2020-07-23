@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useMemo } from 'react';
-import { AppContext } from './data/Context';
+import { MovieContext } from './data/movieContext';
 import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
 import styled from "styled-components";
@@ -47,31 +47,31 @@ const tabs = [
 const List = () => {
   const [active, setActive] = useState(tabs[0]);
 
-  const { movies, setMovies, showLoading, setShowLoading } = useContext(AppContext);
+  const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
   const date = new Date();
 
   
 
   let active_films = useMemo(() => {
-    let all_films = movies.filter(active.content(date));
+    let all_films = movieFeed.filter(active.content(date));
 
     return all_films;
-  }, [movies, active, date]);
+  }, [movieFeed, active, date]);
 
   const apiUrl = "http://localhost:5000/api/movies";
 
   useEffect(() => {
     async function fetchMovies() {
       const result = await axios(apiUrl);
-      setMovies(result.data);      
-      setShowLoading(false);
+      setMovieFeed(result.data);      
+      setLoading(false);
     }
     fetchMovies();
   }, []); 
 
   return (
     <div>
-    {showLoading && <span className="sr-only">Loading...</span>}   
+    {loading && <span className="sr-only">Loading...</span>}   
     <div className="tab-menu">
             <ButtonGroup>
               {tabs.map(tab => (

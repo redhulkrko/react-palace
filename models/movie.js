@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+const shortid = require('shortid');
+
 
 const MovieSchema = new mongoose.Schema({
   Id: {
     type: String,
+    required: true,
+    default: shortid.generate
   },
   Title: {
     type: String,
+    required: true
   },
   Synopsis: {
     type: String,
@@ -15,11 +20,13 @@ const MovieSchema = new mongoose.Schema({
   },
   Rating: {
     type: String,
+    default: 'TBC'
   },
   Duration: {
-    type: Number,
+    type: String,
+    default: 'TBC'
   },
-  poster: {
+  FilmPosterUrl: {
     type: String,
   },  
   slide: {
@@ -27,6 +34,7 @@ const MovieSchema = new mongoose.Schema({
   },
   OpeningDate: {
     type: Date,
+    required: true
   },
   Updated: {
     type: Date,

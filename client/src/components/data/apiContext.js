@@ -5,14 +5,14 @@ const APIContext = createContext();
 
 export function APIContextProvider({ children }) {
   const [films, setFilms] = useState([]);
-  // const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   
 
   useEffect(() => {
     async function fetchData() {
       setFilms([]);
-      // setPosts([]);
+      setPosts([]);
       setLoading(true);
 
 
@@ -27,40 +27,26 @@ export function APIContextProvider({ children }) {
         }
       );
 
-      // const { data: myFilms } = await axios.get(
-      //   `http://localhost:5000/api/movies`
-      // );
+      const { data: myFilms } = await axios.get(
+        `http://localhost:5000/api/movies`
+      );
 
 
-      // const allFilms = vFilms.map(vFilm => {
-      //   const localFilm =
-      //     myFilms.find(
-      //       myFilm => myFilm.Id === vFilm.Id
-      //     ) || {};
-      //   return { ...vFilm, ...localFilm };
-      // });
+      const allFilms = [...vFilms.map(vFilm => {
+        const localFilm =
+          myFilms.find(
+            myFilm => myFilm.Id === vFilm.Id
+          ) || {};
+        return { ...vFilm, ...localFilm };
+      }), ...myFilms.filter( myFilm => !vFilms.find(vFilm => vFilm.Id === myFilm.Id) )]
 
-
-
-      // console.log({ merged_array });
-
-      // const allFilms = [
-      //   ...myFilms,
-      //   ...vFilms.filter(
-      //     vFilm => !myFilms.find(myFilm => myFilm.Id === vFilm.Id)
-      //   )
-      // ];
-
-      console.log(vFilms);
+      console.log(allFilms);
       // console.log(myFilms);
       // console.log(allFilms);
 
-      const allFilms = [
-        ...vFilms,
-      ];
       setFilms(allFilms);
       setLoading(false);
-      // setPosts(myFilms);
+      setPosts(myFilms);
     }
     fetchData();
   }, []);
@@ -69,6 +55,7 @@ export function APIContextProvider({ children }) {
     <APIContext.Provider
       value={{
         films,
+        posts,
         loading  
       }}
     >

@@ -261,8 +261,8 @@ h1 span {
     padding: 0;
   }
   .thumbnail img {
-    height: 220px;
-    width: 88%;
+    height: 265px;
+    width: 83%;
   }
 
   .controls span.icons {
@@ -335,10 +335,10 @@ h1 span {
 
 
 
-/* .alice-carousel__wrapper {
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-}  */
+.alice-carousel__wrapper {
+  padding-left: 18px !important;
+  padding-right: 0 !important;
+} 
 
 
 .alice-carousel__dots {
@@ -356,6 +356,7 @@ h1 span {
   font-size: .84em;
     font-weight: 600;
     margin: .2em 0;
+    color:#000;
 }
 
 span.title {
@@ -396,10 +397,6 @@ span.cert {
   grid-template-columns: 70px 85px;
 }
 
-.title {
-  margin-bottom: 15px;
-}
-
 .dzu-previewContainer {
   padding: 10px 3% !important;
   flex-direction: column !important;
@@ -430,4 +427,12 @@ span.cert {
 
 .dzu-inputLabelWithFiles {
   margin-left: 9% !important;
+}
+
+.create-form {
+  display: grid;
+  grid-template-columns: 1fr 25%;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
 }
