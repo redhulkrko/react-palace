@@ -39,7 +39,6 @@ const SubmitMovie = props => {
       .then(result => {
         setShowLoading(false);
         console.log(result);
-        setMovie({});
         props.history.push("/show/" + result.data.movie._id);
       })
       .catch(error => setShowLoading(false));
@@ -83,7 +82,6 @@ const EditMovie = (props) => {
         .then(result => {
           setShowLoading(false);
           console.log(result);
-          setMovie({});
           props.history.push("/show/" + result.data.movie._id);
         })
         .catch(error => setShowLoading(false));

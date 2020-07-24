@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 // import { APIContextProvider } from "./xapiContext";
 import { MyTestStore } from './App';
 import List from './List';
-import Updates from './Updates'
+import Updates from './Updates';
+import { MovieContext } from './data/movieContext';
 
 const MainContainer = styled.main`
 grid-area: main;
@@ -22,12 +23,20 @@ const UpdateContainer = styled.div`
 const Movies = (props) => {
   console.log(useContext(MyTestStore));
 
+  const { setMovie } = useContext(MovieContext)
+
+  const newMovie = () => {
+    setMovie({})
+    props.history.push('/admin/movies/new');
+
+  }
+
   return (
 <>
 
  <MainContainer>
        <h1>Movies</h1>
-       <Link to="/admin/movies/new">Add Movie</Link>
+       <Link onClick={newMovie}>Add Movie</Link>
        <List/>
 </MainContainer>
 <UpdateContainer>
