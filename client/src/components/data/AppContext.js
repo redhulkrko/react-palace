@@ -42,7 +42,7 @@ export const AppContextProvider = props => {
       );
 
       const { data: myFilms } = await axios.get(
-        `http://localhost:5000/api/movies`
+        `/api/movies`
       );
 
       const allFilms = [
