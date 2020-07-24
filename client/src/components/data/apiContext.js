@@ -28,7 +28,7 @@ export function APIContextProvider({ children }) {
       );
 
       const { data: myFilms } = await axios.get(
-        `/api/movies`
+        `http://localhost:5000/api/movies`
       );
 
 
