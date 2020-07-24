@@ -8,6 +8,13 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
 
 var cors = require('cors');
 
+const proxy = require('http-proxy-middleware')
+
+module.exports = function(app) {
+    // add other server routes to path array
+    app.use(proxy(['/api' ], { target: 'http://localhost:5000' }));
+} 
+
 (async () => {
   try {
     await mongoose.connect(MONGO_URI, { useNewUrlParser: true });
