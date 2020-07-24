@@ -26,7 +26,7 @@ height: auto;
 const ListRow = props => {
 
     const deleteMovie = () => {
-        axios.delete('http://localhost:5000/api/movies/delete/' + props.obj._id)
+        axios.delete('http://palace-cinema.herokuapp.com/api/movies/delete/' + props.obj._id)
             .then((res) => {
                 console.log('Movie successfully deleted!')
             }).catch((error) => {

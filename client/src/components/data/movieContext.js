@@ -45,7 +45,7 @@ useEffect(() => {
     );
 
     const { data: myMovies } = await axios.get(
-      `http://localhost:5000/api/movies`
+      `http://palace-cinema.herokuapp.comherokuapp.com/api/movies`
     );
 
 

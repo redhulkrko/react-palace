@@ -58,7 +58,7 @@ const List = () => {
     return all_films;
   }, [movieFeed, active, date]);
 
-  const apiUrl = "http://localhost:5000/api/movies";
+  const apiUrl = "http://palace-cinema.herokuapp.com/api/movies";
 
   useEffect(() => {
     async function fetchMovies() {

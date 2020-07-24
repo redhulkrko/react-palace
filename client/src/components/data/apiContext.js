@@ -28,7 +28,7 @@ export function APIContextProvider({ children }) {
       );
 
       const { data: myFilms } = await axios.get(
-        `http://localhost:5000/api/movies`
+        `http://palace-cinema.herokuapp.com/api/movies`
       );
 
 
