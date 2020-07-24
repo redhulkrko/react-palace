@@ -14,7 +14,7 @@ const AdminList = styled.ul`
 const List = () => {
   const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
 
-  const apiUrl = "/api/movies";
+  const apiUrl = "http://localhost:5000/api/movies";
 
   useEffect(() => {
     async function fetchMovies() {

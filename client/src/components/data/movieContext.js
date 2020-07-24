@@ -45,7 +45,7 @@ useEffect(() => {
     );
 
     const { data: myMovies } = await axios.get(
-      `/api/movies`
+      `http://localhost:5000/api/movies`
     );
 
 

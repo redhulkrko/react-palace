@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import session from "express-session";
 import connectStore from "connect-mongo";
 import { userRoutes, sessionRoutes, movieRoutes} from './routes/index';
-import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
+import { NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './config';
 
 var cors = require('cors');
 
@@ -59,7 +59,7 @@ else {
     res.sendFile(path.join(__dirname, "./client/public/index.html"));
   });
 }
-
+const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 } catch (err) {
   console.log(err)
