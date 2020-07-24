@@ -42,7 +42,7 @@ export const AppContextProvider = props => {
       );
 
       const { data: myFilms } = await axios.get(
-        `http://palace-cinema.herokuapp.com/api/movies`
+        `https://palace-cinema.herokuapp.com/api/movies`
       );
 
       const allFilms = [
