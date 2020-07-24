@@ -35,7 +35,6 @@ app.use(session({
     maxAge: parseInt(SESS_LIFETIME)
   }
 }));
-var path = require('path');
 
 const apiRouter = express.Router();
 app.use('/api', apiRouter);
