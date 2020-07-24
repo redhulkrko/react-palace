@@ -20,7 +20,7 @@ const SubmitMovie = props => {
   const handleSubmit = () => {
     console.log({ movie });
     console.log(files.map(f => f.meta));
-    const apiUrl = "https://palace-cinema.herokuapp.com/api/movies/";
+    const apiUrl = "http://palace-cinema.herokuapp.com/api/movies/";
     const headers = "multipart/form-data";
     const formData = new FormData();
     formData.set("Title", movie.Title);
@@ -57,7 +57,7 @@ const SubmitMovie = props => {
 const EditMovie = (props) => {
     const { files, onSubmit } = props;
     const { movie, setShowLoading, setMovie, resetMovie } = useContext(AppContext);
-    const apiUrl = "https://palace-cinema.herokuapp.com/api/movies/" + props.match.params._id;
+    const apiUrl = "http://palace-cinema.herokuapp.com/api/movies/" + props.match.params._id;
   
   
   

@@ -14,7 +14,7 @@ const AdminList = styled.ul`
 const List = () => {
   const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
 
-  const apiUrl = "https://palace-cinema.herokuapp.com/api/movies";
+  const apiUrl = "http://palace-cinema.herokuapp.com/api/movies";
 
   useEffect(() => {
     async function fetchMovies() {

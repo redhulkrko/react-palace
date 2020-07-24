@@ -90,7 +90,7 @@ const Edit = (props) => {
   const { user, verified, setState } = useContext(MyTestStore);
   const { movie, setMovie, loading, setLoading, apiMoveez } = useContext(MovieContext);
   const { match } = props;
-  const apiUrl = "https://palace-cinema.herokuapp.com/api/movies/" + props.match.params._id;
+  const apiUrl = "http://palace-cinema.herokuapp.com/api/movies/" + props.match.params._id;
 
   const optionsDefault = [
     { label: 'U', value: 'U' },
