@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser')
@@ -68,7 +69,7 @@ router.post('/', upload.array('poster'), (req, res) => {
     Rating: (req.body.Rating) ? req.body.Rating : 'TBC',
     Duration: req.body.Duration,
     FilmPosterUrl:  filenames[a],
-    slide: filenames[b]
+    BackdropImageUrl: filenames[b]
   };
 
   if (req.body.Id != 'N/A') {
@@ -120,7 +121,7 @@ Movie.findByIdAndUpdate(req.params.id)
     }
 
     if (b >= 0) {
-      movie.slide = filenames[b]
+      movie.BackdropImageUrl = filenames[b]
     }
 
   }
@@ -134,6 +135,41 @@ Movie.findByIdAndUpdate(req.params.id)
       res.status(400).json('Unable to update the Database'));
 });
 
+router.get('/trash/:id', (req, res) => {
+  Movie.findByIdAndUpdate(req.params.id)
+  .then(movie => {
+    
+      movie.Status = 'trash',
+      movie.Updated = Date.now(),
+
+    console.log(movie);
+    movie.save()
+    .then(() => res.json({ movie, msg: 'Updated successfully' }))
+    .catch(err =>
+        res.status(400).json('Unable to update the Database'))
+      })
+      .catch(err =>
+        res.status(400).json('Unable to update the Database'));
+  });
+
+
+  router.get('/restore/:id', (req, res) => {
+    Movie.findByIdAndUpdate(req.params.id)
+    .then(movie => {
+      
+        movie.Status = 'active',
+        movie.Updated = Date.now(),
+  
+      console.log(movie);
+      movie.save()
+      .then(() => res.json({ movie, msg: 'Updated successfully' }))
+      .catch(err =>
+          res.status(400).json('Unable to update the Database'))
+        })
+        .catch(err =>
+          res.status(400).json('Unable to update the Database'));
+    });
+
 // @route GET api/movies/:id
 // @trailer Delete movie by id
 // @access Public
@@ -141,6 +177,9 @@ router.delete('/delete/:id', (req, res) => {
   Movie.findByIdAndRemove(req.params.id)
     .then(() => res.json('Movie entry deleted successfully'))
     .catch(err => res.status(404).json({ error: 'No such a movie' }));
-});
+});  
+  
+
+
 
 module.exports = router;

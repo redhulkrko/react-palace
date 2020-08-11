@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MyTestStore } from "./App";
 import { MovieContext } from './data/movieContext';
 import {EditMovie, Preview, Layout} from './data/FormHandlers';
@@ -88,9 +88,22 @@ const HideMe = styled.div`
 
 const Edit = (props) => {
   const { user, verified, setState } = useContext(MyTestStore);
-  const { movie, setMovie, loading, setLoading, apiMoveez } = useContext(MovieContext);
+  const [loading, setLoading] = useState(true);
+
+  const { movie, setMovie, setApiMoveez, fetchMoveez, apiMoveez } = useContext(MovieContext);
   const { match } = props;
   const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
+
+  const promise = fetchMoveez();
+
+  useEffect(() => {
+    setLoading(true)
+    promise.then(movApi => {
+      console.log(movApi)
+      setApiMoveez(movApi)
+      setLoading(false)
+    });
+  }, []);
 
   const optionsDefault = [
     { label: 'U', value: 'U' },

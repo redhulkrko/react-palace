@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { MovieContext } from './data/movieContext';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
@@ -25,10 +26,23 @@ height: auto;
 
 const ListRow = props => {
 
-    const deleteMovie = () => {
-        axios.delete('http://localhost:5000/api/movies/delete/' + props.obj._id)
+
+    const { fetchList, setFetchList } = useContext(MovieContext);
+
+    // const deleteMovie = () => {
+    //     axios.delete('http://localhost:5000/api/movies/delete/' + props.obj._id)
+    //         .then((res) => {
+    //             console.log('Movie successfully deleted!')
+    //         }).catch((error) => {
+    //             console.log(error)
+    //         })
+    // }
+
+    const trashMovie = () => {
+        axios.get('http://localhost:5000/api/movies/trash/' + props.obj._id)
             .then((res) => {
-                console.log('Movie successfully deleted!')
+                console.log('Movie successfully trashed!')
+                setFetchList(!fetchList);
             }).catch((error) => {
                 console.log(error)
             })
@@ -36,15 +50,16 @@ const ListRow = props => {
     return (
         <>
         <ListItem>
-            <ListImg src={"http://localhost/media/" + props.obj.slide}/>
+            <ListImg src={props.obj.BackdropImageUrl}/>
             <div>
             <h4>{props.obj.Title}</h4>
-            <p><Link className="edit-link" to={"/admin/movies/edit/" + props.obj._id}>
-                            Edit
-                        </Link></p>
-            <p><Link className="edit-link" onClick={deleteMovie}>
-                Delete
-            </Link></p>
+            {props.obj.Type ? (
+            // Hello!
+            <div>
+            <p><Link className="edit-link" to={"/admin/movies/edit/" + props.obj._id}>Edit</Link></p>
+            <p><Link className="edit-link" onClick={trashMovie}>Trash</Link></p>            </div>
+)  : (<div></div>
+            )}
             </div>
         </ListItem>
         </>

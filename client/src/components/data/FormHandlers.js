@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from './AppContext';
+import { MovieContext } from './movieContext';
 import styled from "styled-components";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ const HideMe = styled.div`
 
 const SubmitMovie = props => {
   const { files, onSubmit } = props;
-  const { movie, setMovie, setShowLoading, resetMovie } = useContext(AppContext);
+  const { movie, setMovie, setLoading } = useContext(MovieContext);
 
   const handleSubmit = () => {
     console.log({ movie });
@@ -37,11 +37,11 @@ const SubmitMovie = props => {
     axios
       .post(apiUrl, formData, headers)
       .then(result => {
-        setShowLoading(false);
+        setLoading(false);
         console.log(result);
         props.history.push("/show/" + result.data.movie._id);
       })
-      .catch(error => setShowLoading(false));
+      .catch(error => setLoading(false));
     onSubmit();
   };
   return (
@@ -55,7 +55,7 @@ const SubmitMovie = props => {
 
 const EditMovie = (props) => {
     const { files, onSubmit } = props;
-    const { movie, setShowLoading, setMovie, resetMovie } = useContext(AppContext);
+    const { movie, setLoading, setMovie } = useContext(MovieContext);
     const apiUrl = "http://localhost:5000/api/movies/" + props.match.params._id;
   
   
@@ -80,11 +80,11 @@ const EditMovie = (props) => {
       axios
         .post(apiUrl, formData, headers)
         .then(result => {
-          setShowLoading(false);
+          setLoading(false);
           console.log(result);
           props.history.push("/show/" + result.data.movie._id);
         })
-        .catch(error => setShowLoading(false));
+        .catch(error => setLoading(false));
       onSubmit();
     };
     return (

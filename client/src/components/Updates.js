@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MovieContext } from './data/movieContext';
 import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
@@ -11,36 +11,42 @@ const AdminList = styled.ul`
   margin: 1rem 0;
 `;
 
-const List = () => {
-  const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
+const UpdatesList = () => {
+  
+  const [loading, setLoading] = useState(true);
 
-  const apiUrl = "http://localhost:5000/api/movies";
+  const { myMovies, setMyMovies, fetchMovies } = useContext(MovieContext);
+
+  const promise = fetchMovies();
 
   useEffect(() => {
-    async function fetchMovies() {
-      const result = await axios(apiUrl);
-      setMovieFeed(result.data);      
-      console.log(result.data);
-      setLoading(false);
-    }
-    fetchMovies();
-  }, []); 
+    setLoading(true)
+    promise.then(updates => {
+      console.log(updates)
+      setMyMovies(updates)
+      setLoading(false)
+    });
+  }, []);
 
-  const updates = movieFeed.sort(
-    (a, b) => Date.parse(b.Updated) - Date.parse(a.Updated)
-  );
+  const updates = myMovies.sort(function(a, b) { 
+    return new Date(b.Updated) - new Date(a.Updated)
+  })
+
+  console.log(updates);
 
   return (
     <div>
-    {loading && <span className="sr-only">Loading...</span>}    
+      {loading && <p>Loading...</p>}
+      {!loading &&
       <AdminList>
-        {updates.map((res, i) => {
+        {updates.slice(0,5).map((res, i) => {
           return <UpdateRow obj={res} key={i} />;
         })}
       </AdminList>
+}
     </div>         
 
   );
 }
 
-export default List;
+export default UpdatesList;

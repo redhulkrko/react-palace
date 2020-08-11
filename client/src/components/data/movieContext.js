@@ -21,51 +21,56 @@ const [movieFeed, setMovieFeed] = useState([]);
 const [movie, setMovie] = useState(movieData);
 
 
-const resetMovie = () => setMovie(movieData);
+const [fetchList, setFetchList] = useState(false);
 
-const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-  async function fetchData() {
-    setMovieFeed([]);
-    setApiMoveez([]);
-    setMyMovies([]);
-    setLoading(true);
-
-
-    const headers = {
-      VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc"
-    };
-
-    const { data: vzMovies } = await axios.get(
-      `https://api.us.veezi.com/v1/film`,
-      {
-        headers
-      }
-    );
-
-    const { data: myMovies } = await axios.get(
-      `http://localhost:5000/api/movies`
-    );
-
-
-    const movieCollection = [
-      ...vzMovies.map(vzMov => {
-      const myMov =
-        myMovies.find(
-          myMov => myMov.Id === vzMov.Id
-        ) || {};
-      return { ...vzMov, ...myMov };
-    }), ...myMovies.filter( myMov => !vzMovies.find(vzMov => vzMov.Id === myMov.Id) )]
-
-    setMovieFeed(movieCollection);
-    setLoading(false);
-    setApiMoveez(vzMovies);
-    setMyMovies(myMovies);
-
+function fetchAllMovies() {
+  return new Promise((resolve, reject) => {
+  const headers = {
+    VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc"
   }
-  fetchData();
-}, []);
+  axios.all([
+    axios.get('https://api.us.veezi.com/v1/film', {headers}),
+    axios.get('http://localhost:5000/api/movies')
+   ])
+   .then(axios.spread(function (vzMovies, myMovies) {
+     console.log('Moveez', vzMovies.data);
+     console.log('Movies', myMovies.data);
+     const movieCollection = [
+      ...vzMovies.data.map(vzMov => {
+      const myMov =
+        myMovies.data.find(
+          myMov => myMov.Id === vzMov.Id
+        ) || {};           
+      return { ...vzMov, ...myMov };
+    }), ...myMovies.data.filter( myMov => !vzMovies.data.find(vzMov => vzMov.Id === myMov.Id) )]
+    resolve(movieCollection)
+    console.log(movieCollection)
+   }))
+  })
+}
+
+function fetchMoveez() {
+  console.log("fetch moveez...");
+  return new Promise((resolve, reject) => {
+  const headers = { VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc" }
+  axios.get( `https://api.us.veezi.com/v1/film`, {headers})
+  .then(function (myMoveez) {
+    const myMoveezCollection = [...myMoveez.data.map(vzMov => { return { ...vzMov }}) ]
+    resolve(myMoveezCollection)
+    })
+  })
+}
+
+function fetchMovies() {
+  console.log("fetch movies...");
+  return new Promise((resolve, reject) => {
+  axios.get('http://localhost:5000/api/movies')
+  .then(function (myMovies) {
+  const myMovieCollection = [...myMovies.data.map(myMov => { return { ...myMov }}) ]
+  resolve(myMovieCollection)
+  })
+  })
+}
 
 
 const values = {
@@ -77,9 +82,11 @@ const values = {
   setMovieFeed,
   movie,
   setMovie,
-  loading,
-  setLoading,
-  resetMovie
+  fetchAllMovies,
+  fetchMoveez,
+  fetchMovies,
+  fetchList,
+  setFetchList
 };
   return (
     <MovieContext.Provider value={values}>

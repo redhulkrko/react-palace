@@ -34,44 +34,46 @@ const tabs = [
     title: "Now Showing",
     label: "Now",
     content: date => item =>
-      date > Date.parse(item.OpeningDate.substring(0, 10))
+      date > Date.parse(item.OpeningDate.substring(0, 10)) && item.Status != 'trash'
   },
   {
     title: "Coming Soon",
     label: "Soon",
     content: date => item =>
-      date < Date.parse(item.OpeningDate.substring(0, 10))
+      date < Date.parse(item.OpeningDate.substring(0, 10)) && item.Status != 'trash'
   }
 ];
 
+
+
 const List = () => {
+
   const [active, setActive] = useState(tabs[0]);
 
-  const { movieFeed, setMovieFeed, loading, setLoading } = useContext(MovieContext);
-  const date = new Date();
+  const [loading, setLoading] = useState(true);
 
-  
+  const { movieFeed, setMovieFeed, fetchAllMovies, fetchList } = useContext(MovieContext);
+
+  const promise = fetchAllMovies();
+
+  const date = new Date();
 
   let active_films = useMemo(() => {
     let all_films = movieFeed.filter(active.content(date));
-
     return all_films;
   }, [movieFeed, active, date]);
 
-  const apiUrl = "http://localhost:5000/api/movies";
-
   useEffect(() => {
-    async function fetchMovies() {
-      const result = await axios(apiUrl);
-      setMovieFeed(result.data);      
-      setLoading(false);
-    }
-    fetchMovies();
-  }, []); 
+    setLoading(true)
+    promise.then(data => {
+      console.log(data)
+      setMovieFeed(data)
+      setLoading(false)
+    });
+  }, [active, fetchList]);
 
   return (
     <div>
-    {loading && <span className="sr-only">Loading...</span>}   
     <div className="tab-menu">
             <ButtonGroup>
               {tabs.map(tab => (
@@ -84,12 +86,15 @@ const List = () => {
                 </Tab>
               ))}
             </ButtonGroup>
-        </div> 
+        </div>
+        {loading && <p>Loading...</p>}
+        {!loading &&
       <AdminList>
         {active_films.map((res, i) => {
           return <ListRow obj={res} key={i} />;
         })}
       </AdminList>
+}
     </div>         
 
   );

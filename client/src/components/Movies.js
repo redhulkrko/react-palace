@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 // import { APIContextProvider } from "./xapiContext";
 import { MyTestStore } from './App';
 import List from './List';
-import Updates from './Updates';
+import UpdatesList from './Updates';
 import { MovieContext } from './data/movieContext';
 
 const MainContainer = styled.main`
-grid-area: main;
+  grid-area: main;
   margin: 0;
   padding: 20px;
   overflow-y: scroll;
@@ -20,6 +20,7 @@ const UpdateContainer = styled.div`
   padding: 20px;
   background: purple;
 `;
+
 const Movies = (props) => {
   console.log(useContext(MyTestStore));
 
@@ -31,6 +32,10 @@ const Movies = (props) => {
 
   }
 
+  const UpdatesListed = useMemo(() => {
+    return <UpdatesList/>
+  })
+
   return (
 <>
 
@@ -41,7 +46,7 @@ const Movies = (props) => {
 </MainContainer>
 <UpdateContainer>
   <h1>Updates</h1>
-  <Updates/>
+  {UpdatesListed}
 </UpdateContainer>
 </>
 )};

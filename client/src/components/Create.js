@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { MyTestStore } from "./App";
 import { MovieContext } from './data/movieContext';
 // import APIContext from './data/Context';
@@ -85,7 +85,21 @@ const HideMe = styled.div`
 const Create = () => {
   const { user, verified, setState } = useContext(MyTestStore);
 
-  const { movie, setMovie, showLoading, apiMoveez } = useContext(MovieContext);
+  const [loading, setLoading] = useState(true);
+
+  const { movie, setMovie, setApiMoveez, fetchMoveez, apiMoveez } = useContext(MovieContext);
+
+  const promise = fetchMoveez();
+
+  useEffect(() => {
+    setLoading(true)
+    promise.then(movApi => {
+      console.log(movApi)
+      setApiMoveez(movApi)
+      setLoading(false)
+    });
+  }, []);
+
 
   const optionsDefault = [
     { label: 'U', value: 'U' },
@@ -114,10 +128,11 @@ const Create = () => {
 
   return (
     <MainContainer>
+      {loading && <p>Loading...</p>}
+      {!loading && 
       <MovieForm>
-        <MovieInfo>
-          {showLoading && <span className="sr-only">Loading...</span>}
-          <PageTitle>Add Movie</PageTitle>
+        <MovieInfo>          
+        <PageTitle>Add Movie</PageTitle>
           <TitleInput>
           <div className="wrapper">
             <span>Title</span>
@@ -216,6 +231,7 @@ const Create = () => {
     />
         </MoviePosters>
       </MovieForm>
+}
     </MainContainer>
   );
 };

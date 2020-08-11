@@ -29,7 +29,7 @@ const MovieSchema = new mongoose.Schema({
   FilmPosterUrl: {
     type: String,
   },  
-  slide: {
+  BackdropImageUrl: {
     type: String,
   },
   OpeningDate: {
@@ -39,6 +39,14 @@ const MovieSchema = new mongoose.Schema({
   Updated: {
     type: Date,
     default: Date.now()
+  },
+  Status: {
+    type: String,
+    default: 'active'
+  },
+  Type: {
+    type: String,
+    default: 'local'
   }
 
 });
