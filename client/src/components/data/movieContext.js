@@ -21,13 +21,15 @@ const [movieFeed, setMovieFeed] = useState([]);
 const [movie, setMovie] = useState(movieData);
 
 
+const [sessionsFeed, setSessionsFeed] = useState([]);
+
 const [fetchList, setFetchList] = useState(false);
+
+const headers = { VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc" }
+
 
 function fetchAllMovies() {
   return new Promise((resolve, reject) => {
-  const headers = {
-    VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc"
-  }
   axios.all([
     axios.get('https://api.us.veezi.com/v1/film', {headers}),
     axios.get('http://localhost:5000/api/movies')
@@ -52,7 +54,6 @@ function fetchAllMovies() {
 function fetchMoveez() {
   console.log("fetch moveez...");
   return new Promise((resolve, reject) => {
-  const headers = { VeeziAccessToken: "4nv3j36r58gkxfka0gneakmmnc" }
   axios.get( `https://api.us.veezi.com/v1/film`, {headers})
   .then(function (myMoveez) {
     const myMoveezCollection = [...myMoveez.data.map(vzMov => { return { ...vzMov }}) ]
@@ -73,6 +74,17 @@ function fetchMovies() {
 }
 
 
+function fetchSessions() {
+  console.log("fetch sessions...");
+  return new Promise((resolve, reject) => {
+  axios.get( `https://api.us.veezi.com/v1/session`, {headers})
+  .then(function (mySessions) {
+    const mySessionCollection = [...mySessions.data.map(vzSes => { return { ...vzSes }}) ]
+    resolve(mySessionCollection)
+    })
+  })
+}
+
 const values = {
   apiMoveez,
   setApiMoveez,
@@ -85,8 +97,11 @@ const values = {
   fetchAllMovies,
   fetchMoveez,
   fetchMovies,
+  fetchSessions,
   fetchList,
-  setFetchList
+  setFetchList,
+  sessionsFeed,
+  setSessionsFeed
 };
   return (
     <MovieContext.Provider value={values}>
