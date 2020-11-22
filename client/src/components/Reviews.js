@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import styled from "styled-components";
-import { APIContextProvider } from "./data/apiContext";
+import { MovieContext } from './data/movieContext';
+import TrashRow from './TrashRow';
 
 
 
@@ -12,14 +13,38 @@ grid-area: main;
 `;
 
 const Reviews = (props) => {
+
+  const [loading, setLoading] = useState(true);
+  const { sessionsFeed, setSessionsFeed, fetchSessions, fetchList } = useContext(MovieContext);
+
+  const promise = fetchSessions();
+
+  const sessionTitles = [...new Set(sessionsFeed.map(item => item.Title))];
+  console.log(sessionTitles);
+
+  useEffect(() => {
+    setLoading(true)
+    promise.then(data => {
+      console.log(data)
+      setSessionsFeed(data)
+      setLoading(false)
+    });
+  }, [fetchList]);
+
   return (
 <>
-<APIContextProvider>
 
  <MainContainer>
        <h1>Reviews</h1>
+       {loading && <p>Loading...</p>}
+       {/* {!loading &&
+      <p>
+        {filtered.map((res, i) => {
+          return <TrashRow obj={res} key={i} />;
+        })}
+      </p>
+} */}
 </MainContainer>
-</APIContextProvider>
 </>
 )};
 export default (Reviews);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MovieContext } from './data/movieContext';
 import axios from 'axios';
 // import { withRouter } from 'react-router-dom';
