@@ -1,35 +1,31 @@
-export const login = user => (
+export const login = (user) =>
   fetch("api/session", {
     method: "POST",
     body: JSON.stringify(user),
     headers: {
-      "Content-Type": "application/json"
-    }
-  })
-);
+      "Content-Type": "application/json",
+    },
+  });
 
-export const signup = user => (
+export const signup = (user) =>
   fetch("api/users", {
     method: "POST",
     body: JSON.stringify(user),
     headers: {
-      "Content-Type": "application/json"
-    }
-  })
-);
+      "Content-Type": "application/json",
+    },
+  });
 
-export const logout = () => (
-  fetch("api/session", { method: "DELETE" })
-);
+export const logout = () => fetch("api/session", { method: "DELETE" });
 
 export const checkLoggedIn = async () => {
-  const response = await fetch('/api/session');
+  const response = await fetch("/api/session");
   const { user } = await response.json();
   console.log(response, user);
   let preloadedState = {};
   if (user) {
     preloadedState = {
-      session: user
+      session: user,
     };
   }
   return preloadedState;

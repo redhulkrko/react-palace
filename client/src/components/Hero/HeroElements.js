@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ImgBg from "../../images/poster.jpg";
 
 export const HeroContainer = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
   /* margin-top: -80px; */
 `;
 

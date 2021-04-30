@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, Redirect, Route, withRouter } from "react-router-dom";
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from "styled-components";
 import * as apiUtil from "../util/session";
-import { MyTestStore } from './App'
-
+import { MyTestStore } from "../App";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,7 +24,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   width: 90vw;
   text-align: center;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
   h1 {
     font-weight: 600;
@@ -54,10 +53,6 @@ const Wrapper = styled.div`
       font-size: 1.55rem;
     }
   }
-
-  
-
-
 `;
 
 const LoginForm = styled.div`
@@ -77,10 +72,9 @@ const LoginForm = styled.div`
     font-family: inherit;
     font-size: 1.15em;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box; /* Opera/IE 8+ */
   }
-  
 
   @media (min-width: 768px) {
     margin-top: 2rem;
@@ -95,7 +89,7 @@ const LoginForm = styled.div`
 
     input {
       font-size: 1.4em;
-    }  
+    }
   }
 
   @media (min-width: 1200px) {
@@ -103,23 +97,24 @@ const LoginForm = styled.div`
 
     input {
       font-size: 100%;
-    } 
+    }
   }
 
   input:focus {
     border-color: #1270e3;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 `;
 
 const Submit = styled.input`
-    cursor: pointer;
-    background: linear-gradient(120deg, #59c2ff, #1270e3);
-    background-size: 180%;
-    color: #fff;
-    font-weight: 500;
-    border: none;
-    transition: background .35s ease;
+  cursor: pointer;
+  background: linear-gradient(120deg, #59c2ff, #1270e3);
+  background-size: 180%;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  transition: background 0.35s ease;
 `;
 
 const LoginLinks = styled.div`
@@ -134,7 +129,7 @@ const LoginLinks = styled.div`
     font-weight: 500;
     text-decoration: none;
     color: #1270e3;
-    transition: color .35s ease;
+    transition: color 0.35s ease;
   }
 
   a:hover {
@@ -151,60 +146,65 @@ const LoginLinks = styled.div`
   @media (min-width: 992px) {
     a {
       font-size: 18px;
-    }  
+    }
   }
 
   @media (min-width: 1200px) {
     a {
       font-size: 14px;
-    } 
+    }
   }
 `;
 
 const Auth = ({ path, component: Component }) => {
-  const { user, setState } = useContext(MyTestStore)
-  const loggedIn = !!user
-  console.log(loggedIn)
-  console.log({user})
+  const { user, setState } = useContext(MyTestStore);
+  const loggedIn = !!user;
+  console.log(loggedIn);
+  console.log({ user });
   return (
-  <Route
-    path={path}
-    render={props => (
-      loggedIn ?
-      <Redirect to='/admin' /> :
-      <Component {...props} />
-    )}
-  />
-)}
+    <Route
+      path={path}
+      render={(props) =>
+        loggedIn ? <Redirect to="/admin" /> : <Component {...props} />
+      }
+    />
+  );
+};
 
-export const ProtectedRoute = ({ path, component: Component, layout: Layout, ...rest }) => {
-  const { user, verified, setState } = useContext(MyTestStore)
-  const loggedIn = !!user
-  console.log(verified)
-  const verifiedAndLoggedIn = verified && loggedIn
-  const verifiedButNotLoggedIn = verified && !loggedIn
-  console.log({loggedIn})
-  console.log({user})
+export const ProtectedRoute = ({
+  path,
+  component: Component,
+  layout: Layout,
+  ...rest
+}) => {
+  const { user, verified, setState } = useContext(MyTestStore);
+  const loggedIn = !!user;
+  console.log(verified);
+  const verifiedAndLoggedIn = verified && loggedIn;
+  const verifiedButNotLoggedIn = verified && !loggedIn;
+  console.log({ loggedIn });
+  console.log({ user });
   return (
-  <Route
-    path={path}
-    render={props => (
-      verifiedAndLoggedIn &&
-      <Layout>
-      <Component {...props} />
-      </Layout> || (verifiedButNotLoggedIn &&
-      <Redirect to='/login' />) || console.log('spinner')
-    )}
-  />
-)}
+    <Route
+      path={path}
+      render={(props) =>
+        (verifiedAndLoggedIn && (
+          <Layout>
+            <Component {...props} />
+          </Layout>
+        )) ||
+        (verifiedButNotLoggedIn && <Redirect to="/login" />) ||
+        console.log("spinner")
+      }
+    />
+  );
+};
 
-export const AuthRoute = withRouter(
-  (Auth)
-);
+export const AuthRoute = withRouter(Auth);
 
 const Login = ({ errors, login }) => {
-  const {loginError, setState} = useContext(MyTestStore)
-  const [loginChecked, setLoginChecked] = useState(false)
+  const { loginError, setState } = useContext(MyTestStore);
+  const [loginChecked, setLoginChecked] = useState(false);
 
   const doLogin = async (e) => {
     e.preventDefault();
@@ -215,56 +215,63 @@ const Login = ({ errors, login }) => {
     const response = await apiUtil.login(user);
     const data = await response.json();
 
-    console.log({response}, {data})
+    console.log({ response }, { data });
 
     if (response.ok) {
-      console.log({user: data, loginError: undefined, verified: true})
-      setState({user: data, loginError: undefined, verified: true})
+      console.log({ user: data, loginError: undefined, verified: true });
+      setState({ user: data, loginError: undefined, verified: true });
     } else {
-      console.log({loginError:response.statusText, verified: true})
-      setState({loginError:response.statusText, verified: true})
-    } 
-  }
-  
+      console.log({ loginError: response.statusText, verified: true });
+      setState({ loginError: response.statusText, verified: true });
+    }
+  };
+
   useEffect(() => {
-    const response = fetch('/api/session')
-    .then((res) => res.json())
-    .then(({user}) => {
-      console.log({verified: true, user: user && user.userId && user || undefined})
-      setState({verified: true, user: user && user.userId && user || undefined});
-      (!user || !user.userId) && setLoginChecked(true)
-    })
-  }, [])
-
-
+    const response = fetch("/api/session")
+      .then((res) => res.json())
+      .then(({ user }) => {
+        console.log({
+          verified: true,
+          user: (user && user.userId && user) || undefined,
+        });
+        setState({
+          verified: true,
+          user: (user && user.userId && user) || undefined,
+        });
+        (!user || !user.userId) && setLoginChecked(true);
+      });
+  }, []);
 
   return (
-    loginChecked && <>
-      <GlobalStyle/>
-      <Container>
-      <Wrapper>
-      <h1>Login</h1>
-      <LoginForm>
-      <p>{errors}</p>
-      <form onSubmit={doLogin}>
-          <input type="email" name="email" placeholder="Email"/>
-          <input type="password" name="password" placeholder="Password"/>
-          {loginError || null}
-          <Submit type="submit" value="Login" />
-      </form>
-      </LoginForm>
-      <LoginLinks>
-        <div>
-          <Link to="/signup">Sign Up?</Link>
-        </div>
-        <div>
-          <Link to="#">Homepage</Link>
-        </div>
-      </LoginLinks>
-      </Wrapper>
-      </Container>
-    </> || null
+    (loginChecked && (
+      <>
+        <GlobalStyle />
+        <Container>
+          <Wrapper>
+            <h1>Login</h1>
+            <LoginForm>
+              <p>{errors}</p>
+              <form onSubmit={doLogin}>
+                <input type="email" name="email" placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
+                {loginError || null}
+                <Submit type="submit" value="Login" />
+              </form>
+            </LoginForm>
+            <LoginLinks>
+              <div>
+                <Link to="/signup">Sign Up?</Link>
+              </div>
+              <div>
+                <Link to="#">Homepage</Link>
+              </div>
+            </LoginLinks>
+          </Wrapper>
+        </Container>
+      </>
+    )) ||
+    null
   );
 };
 
-export default Login
+export default Login;

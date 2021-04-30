@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled, { createGlobalStyle  } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import Button from "./Button";
 
@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   .dropdown-list-item:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-`
+`;
 
 const Dropmenu = styled.div`
   position: absolute;
@@ -39,7 +39,7 @@ const Dropmenu = styled.div`
   visibility: hidden;
   opacity: 0;
   transform: translateY(-10px);
-  transition: all .3s;
+  transition: all 0.3s;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 
   :before {
@@ -51,8 +51,8 @@ const Dropmenu = styled.div`
     height: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-bottom: 6px solid #FFF;
-}
+    border-bottom: 6px solid #fff;
+  }
 `;
 
 export class Dropdown extends Component {
@@ -60,7 +60,7 @@ export class Dropdown extends Component {
     super(props);
 
     this.state = {
-      menuShown: false
+      menuShown: false,
     };
 
     this.toggleMenuBound = this.toggleMenu.bind(this);
@@ -74,8 +74,8 @@ export class Dropdown extends Component {
       document.removeEventListener("click", this.handleOutsideClick, false);
     }
 
-    this.setState(prevState => ({
-      menuActive: !prevState.menuActive
+    this.setState((prevState) => ({
+      menuActive: !prevState.menuActive,
     }));
   }
 
@@ -91,30 +91,25 @@ export class Dropdown extends Component {
     const { Type } = this.props;
     const { Label } = this.props;
     const { menuActive } = this.state;
-    const menuLinks = this.props.links.map(item => (
+    const menuLinks = this.props.links.map((item) => (
       <li key={item.label}>{item.label}</li>
     ));
     return (
       <>
-        <Type
-          onClick={this.toggleMenuBound}
-        >
+        <Type onClick={this.toggleMenuBound}>
           {" "}
           {Label}
-
-        <Dropmenu
-          ref={node => {
-            this.node = node;
-          }}
-          className={`${menuActive ? "dropdown-active" : ""}`}
-        >
-        <ul class="dropdown-list">
-          {menuLinks}
-        </ul>
-        </Dropmenu>
+          <Dropmenu
+            ref={(node) => {
+              this.node = node;
+            }}
+            className={`${menuActive ? "dropdown-active" : ""}`}
+          >
+            <ul class="dropdown-list">{menuLinks}</ul>
+          </Dropmenu>
         </Type>
 
-        <GlobalStyle/>
+        <GlobalStyle />
       </>
     );
   }
@@ -122,5 +117,5 @@ export class Dropdown extends Component {
 
 Dropdown.defaultProps = {
   Type: Button,
-  Label: ""
+  Label: "",
 };

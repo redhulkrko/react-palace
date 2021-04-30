@@ -17,7 +17,7 @@ const Hero = ({ data }) => {
   console.log({ data });
 
   const settings = {
-    dots: true,
+    dots: false,
     autoplay: true,
     arrows: false,
     fade: true,

@@ -7,7 +7,4 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
 
-    body {
-        background: #000;
-    }
 `;

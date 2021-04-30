@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
-import { AppContextProvider } from './components/data/AppContext';
-import { BrowserRouter } from 'react-router-dom';
+import App from "./App";
+// import { AppContextProvider } from './components/data/AppContext';
+import { MovieProvider } from "./components/data/movieContext";
 
+import { BrowserRouter } from "react-router-dom";
 
-  ReactDOM.render(
-    <AppContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      </AppContextProvider>,
-    document.getElementById("root")
-  );
-
+ReactDOM.render(
+  <MovieProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </MovieProvider>,
+  document.getElementById("root")
+);

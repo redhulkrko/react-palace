@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins-Regular:300,400,600,700");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Poppins-Regular, sans-serif;
+}
+
+body {
+  background: #000;
+}
+
+.slick-slider {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+
+.slick-slide img {
+  margin: 0 auto !important;
+}
+
+.slick-prev {
+  left: -1% !important;
+  z-index: 1;
+}
+.slick-next {
+  right: -1% !important;
+  z-index: 1;
+}
